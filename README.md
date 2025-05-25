@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/OpenRockets/web-dev-error-solutions/main/assets/logo.svg" alt="Web Dev Error Solutions" width="80" />
+  <img style = "border-radius:100%;"src="https://i.ibb.co/YB4ZZfRN/210044478.png" width="100" alt="OpenRockets" />
   <span>🚀 The Web Developer's Error Solutions Handbook</span>
 </h1>
 
