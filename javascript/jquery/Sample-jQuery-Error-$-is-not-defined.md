@@ -92,3 +92,5 @@ Copyrights (c) NekshaDeSilva. All rights reserved. 2025
 - Use a Content Delivery Network (CDN) for faster and more reliable loading of jQuery.
 
 For more troubleshooting tips, visit the [jQuery documentation](https://api.jquery.com/).
+
+
