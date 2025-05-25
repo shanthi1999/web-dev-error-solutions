@@ -114,4 +114,3 @@ document.getElementById('container').addEventListener('click', function (e) {
   <hr>
 
   <p><strong>Happy debugging!</strong></p>
-
