@@ -77,3 +77,6 @@ You should see an alert message saying "Button clicked!".
 
 ## Summary
 Always ensure jQuery is loaded before any code that uses it to avoid the $ is not defined error.
+
+## Resources:
+<a href="https://www.nekshavs.tech">Blog</a>
