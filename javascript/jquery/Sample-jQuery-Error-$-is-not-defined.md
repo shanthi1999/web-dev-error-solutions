@@ -83,3 +83,12 @@ Always ensure jQuery is loaded before any code that uses it to avoid the $ is no
 
 Copyrights (c) OpenRockets OpenSource. All rights reserved.
 Copyrights (c) NekshaDeSilva. All rights reserved. 2025
+---
+
+## More Tips
+
+- If you are using multiple JavaScript libraries that use `$`, consider using `jQuery.noConflict()` to avoid conflicts.
+- Always check your browser console for errors if your scripts are not working as expected.
+- Use a Content Delivery Network (CDN) for faster and more reliable loading of jQuery.
+
+For more troubleshooting tips, visit the [jQuery documentation](https://api.jquery.com/).
