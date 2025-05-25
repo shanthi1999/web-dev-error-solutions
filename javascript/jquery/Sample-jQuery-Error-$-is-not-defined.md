@@ -82,3 +82,4 @@ Always ensure jQuery is loaded before any code that uses it to avoid the $ is no
 <a href="https://www.nekshavs.tech">Blog</a>
 
 Copyrights (c) OpenRockets OpenSource. All rights reserved.
+Copyrights (c) NekshaDeSilva. All rights reserved.
