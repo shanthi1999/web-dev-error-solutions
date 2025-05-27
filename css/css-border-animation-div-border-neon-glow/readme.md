@@ -6,7 +6,7 @@ Create a stunning, animated neon glowing border around any element using pure CS
 
 ## ✨ Demo
 
-![Neon Glowing Border Demo](https://i.ibb.co/7b6vQwN/neon-glow-demo.png)
+![Neon Glowing Border Demo](https://ibb.co/MkMGrZ3b)
 
 ---
 

@@ -2,6 +2,8 @@
 
 /* Let's target the div that we want to have the glowing border. */
 .relative {
+    z-index: 2
+    ;
     /* We're going to create the glowing border using a pseudo-element (like a fake element
        that's part of our div but can be styled separately). */
     /* Think of '::before' as a layer that sits right underneath our main div content. */
@@ -12,7 +14,7 @@
         left: -2px;
         right: -2px;
         bottom: -2px;
-        z-index: 0; /* We want this layer to be behind our actual content, so the text is visible. */
+        z-index: -1; /* We want this layer to be behind our actual content, so the text is visible. */
         border-radius: 13px; /* Matching the rounded corners of our main div. */
         /* This is the cool part: a linear gradient! It blends multiple colors smoothly.
            We're using a bunch of vibrant colors to make it really pop. */
