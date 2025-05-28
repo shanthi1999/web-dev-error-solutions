@@ -4,7 +4,9 @@
     
 </h1>
 <h9 style="font-size:50%">by OpenRockets</h9>
+
 [![OpenRockets](https://img.shields.io/badge/OpenRockets-Verified%20Contributor-white?labelColor=black&style=for-the-badge&logo=Rocket&logoColor=white&link=https://www.github.com/openrockets)](https://www.github.com/openrockets)
+
 <p align="center">
   <span>A comprehensive, community-driven knowledge base for diagnosing and resolving common web development errors.</span><br>
   <span>Accelerate your learning and productivity with clear, concise, and actionable solutions to persistent coding challenges!</span>
