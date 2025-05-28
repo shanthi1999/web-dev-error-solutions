@@ -19,6 +19,7 @@
 - **When does it typically happen?**  
   [Describe the scenario, e.g., "On page load when scripts are in the wrong order."]
 
+
 ---
 
 ## Problem
