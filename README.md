@@ -101,8 +101,7 @@
 <p align="center">
   
  [![Give a star](https://img.shields.io/badge/Give%20a%20star-%E2%AD%90-black?labelColor=white&style=flat-square&logo=github&logoColor=black&link=https://github.com/OpenRockets/web-dev-error-solutions/stargazers)](https://github.com/OpenRockets/web-dev-error-solutions/stargazers)
- 
-  <span> &nbsp;•&nbsp; </span>
+
   <a href="https://github.com/OpenRockets/web-dev-error-solutions/issues/new?assignees=&labels=enhancement&template=solution-template.md&title=Add+solution%3A+">
     <img src="https://img.shields.io/badge/contribute-Add%20a%20solution-blue?style=flat-square" alt="Contribute Solution"/>
   </a>
