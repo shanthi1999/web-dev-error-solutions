@@ -5,7 +5,7 @@ on:
     types: [opened]
 
 permissions:
-  contents: write  # Needed for git push
+  contents: write
 
 jobs:
   generate-doc:
@@ -20,13 +20,17 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Detect topic from issue title + body
+      - name: Detect topic from title + HTML-stripped body
         id: topic
         run: |
           TITLE="${{ github.event.issue.title }}"
           BODY="${{ github.event.issue.body }}"
-          COMBINED=$(echo "$TITLE $BODY" | tr '[:upper:]' '[:lower:]')
 
+          # Remove HTML tags
+          BODY_STRIPPED=$(echo "$BODY" | sed 's/<[^>]*>//g')
+          COMBINED=$(echo "$TITLE $BODY_STRIPPED" | tr '[:upper:]' '[:lower:]')
+
+          # Detect topic
           if echo "$COMBINED" | grep -q "javascript"; then
             echo "topic=javascript" >> $GITHUB_OUTPUT
           elif echo "$COMBINED" | grep -q "css"; then
