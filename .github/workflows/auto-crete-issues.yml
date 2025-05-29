@@ -2,7 +2,8 @@ name: Auto Create Issues Every 10 Minutes
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/10 * * * *'  # every 10 minutes
+  workflow_dispatch:        # also allow manual trigger
 
 jobs:
   create-issue:
@@ -28,27 +29,34 @@ jobs:
 
           echo "response=$RESPONSE" >> $GITHUB_OUTPUT
 
+      - name: Save Gemini response to file
+        run: echo '${{ steps.generate.outputs.response }}' > response.json
+
       - name: Extract Title and Body from Gemini Response
         id: parse
         run: |
-          # Assuming Gemini returns JSON with 'choices[0].message.content' containing markdown
-          echo "${{ steps.generate.outputs.response }}" > response.json
-
-          # Using jq to extract message content
+          # extract the message content from the response JSON
           CONTENT=$(jq -r '.choices[0].message.content' response.json)
 
-          # Now, parse title and body from markdown format, e.g., first line # Title
+          # parse title from first markdown heading line starting with "# "
           TITLE=$(echo "$CONTENT" | grep -m 1 '^# ' | sed 's/^# //')
+
+          # parse body: all lines after the first heading
           BODY=$(echo "$CONTENT" | sed -n '2,$p')
 
           echo "title=$TITLE" >> $GITHUB_OUTPUT
-          echo "body=$BODY" >> $GITHUB_OUTPUT
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Issue
-        uses: peter-evans/create-issue@v4
+        uses: peter-evans/create-issue-from-file@v5
         with:
           title: ${{ steps.parse.outputs.title }}
-          body: ${{ steps.parse.outputs.body }}
+          content-filepath: 'issue-body.md'
           labels: react, ai-generated
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Write issue body to file
+        run: echo "${{ steps.parse.outputs.body }}" > issue-body.md
