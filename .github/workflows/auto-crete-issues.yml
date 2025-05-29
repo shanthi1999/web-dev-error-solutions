@@ -1,0 +1,54 @@
+name: Auto Create Issues Every 10 Minutes
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate Issue Using Gemini 1.5 Flash
+        id: generate
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          RESPONSE=$(curl -s -X POST https://api.gemini.ai/v1/chat/completions \
+            -H "Authorization: Bearer $GEMINI_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "model": "gemini-1.5-flash",
+              "messages": [
+                {"role": "system", "content": "You are a helpful assistant that creates detailed React issue reports."},
+                {"role": "user", "content": "Generate a detailed React developer issue with title and body in markdown format."}
+              ],
+              "max_tokens": 800
+            }')
+
+          echo "response=$RESPONSE" >> $GITHUB_OUTPUT
+
+      - name: Extract Title and Body from Gemini Response
+        id: parse
+        run: |
+          # Assuming Gemini returns JSON with 'choices[0].message.content' containing markdown
+          echo "${{ steps.generate.outputs.response }}" > response.json
+
+          # Using jq to extract message content
+          CONTENT=$(jq -r '.choices[0].message.content' response.json)
+
+          # Now, parse title and body from markdown format, e.g., first line # Title
+          TITLE=$(echo "$CONTENT" | grep -m 1 '^# ' | sed 's/^# //')
+          BODY=$(echo "$CONTENT" | sed -n '2,$p')
+
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+          echo "body=$BODY" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Issue
+        uses: peter-evans/create-issue@v4
+        with:
+          title: ${{ steps.parse.outputs.title }}
+          body: ${{ steps.parse.outputs.body }}
+          labels: react, ai-generated
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
