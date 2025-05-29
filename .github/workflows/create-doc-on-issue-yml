@@ -1,0 +1,31 @@
+name: Create Error Doc from Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  generate-doc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Create Folder and README
+        run: |
+          SAFE_TITLE=$(echo "${{ github.event.issue.title }}" | tr ' ' '-' | tr -cd '[:alnum:]-')
+          mkdir -p "errors/$SAFE_TITLE"
+          echo "## Error Report: $SAFE_TITLE\n\n---\n\n${{ github.event.issue.body }}" > "errors/$SAFE_TITLE/README.md"
+
+      - name: Commit and Push
+        run: |
+          git add .
+          git commit -m "Add error doc: ${{ github.event.issue.title }}"
+          git push
