@@ -1,205 +1,196 @@
 # 🐞 Deprecated, Harmful and Dangerous JavaScript Libraries list for developers - part 2
 
-# ☠️ Harmful or Dangerous JavaScript Libraries: Part 2
+# ☠️ Harmful or Dangerous JavaScript Libraries: Part 3
 
 ---
 
-## 9. 🧨 Known Vulnerable Libraries and Versions (Examples)
+## 24. 🔥 Critical Remote Code Execution (RCE) Vulnerabilities
 
-### 9.1 
+### 24.1 
 
-- **Vulnerabilities**: Prototype pollution, RCE (Remote Code Execution) via deserialization attacks.
-- **Risk**: If used to serialize user input, attackers can inject malicious payloads.
-- **Safe Versions**: >2.1.1
-- **Remediation**: Upgrade immediately; avoid serializing untrusted data.
+- **Issue**: Vulnerable to RCE via deserialization of untrusted JSON.
+- **Impact**: Allows attacker to execute arbitrary commands on the server.
+- **Status**: Deprecated and unsafe, avoid completely.
 
-### 9.2  (again)
+### 24.2 
 
-- **Incident Summary**: Maintainer transferred ownership, attacker published malicious version 3.3.6.
-- **Payload**: Hidden cryptocurrency wallet theft.
-- **Lesson**: Audit ownership transfers; prefer libraries with active, trusted maintainers.
-
-### 9.3 
-
-- **Issue**: Prototype pollution vulnerability in versions <1.2.5.
-- **Risk**: Attackers can modify prototype chain, leading to unexpected behavior or privilege escalation.
-- **Fix**: Upgrade to 1.2.5 or higher.
+- **Risk**: Arbitrary code execution if unsafe loading () is used instead of safe load ().
+- **Best Practice**: Always use  or equivalent secure API.
 
 ---
 
-## 10. 📛 Libraries with Dangerous Defaults
+## 25. 💣 Prototype Pollution Exploits in JS Libraries
 
-### 10.1 
+- Prototype pollution enables attackers to modify or add properties on Object prototype, which can crash or compromise apps.
 
-- **Problem**: If used with default memory store in production, sessions can be lost or lead to DoS.
-- **Security risk**: Session fixation if cookies are not properly configured.
-- **Advice**: Use production-ready session stores like Redis, MongoDB, or Memcached.
+### Vulnerable Libraries (examples):
 
-### 10.2  (Node.js middleware)
+| Library             | Versions affected  | Description                          |
+|---------------------|--------------------|------------------------------------|
+|             | <4.17.21           | Widely used utility library         |
+|           | <1.2.5             | CLI argument parser                 |
+|              | Multiple versions   | Deep merging of objects             |
 
-- **Danger**: Using  with no options (allowing all origins) exposes APIs to CSRF and data theft.
-- **Best practice**: Whitelist trusted origins, use credentials cautiously.
-
----
-
-## 11. 📉 Performance Drainers
-
-### 11.1 
-
-- **More detail**: Heavy (~67KB gzipped), mutable data model.
-- **Impact**: Slower parsing & larger bundles.
-- **Replace with**:  or  for better tree-shaking and immutability.
-
-### 11.2 
-
-- **Heavyweight**: ~400KB uncompressed; includes jQuery dependency.
-- **Alternatives**: , .
+- **How to Mitigate**: Update libraries; sanitize inputs; use defensive coding practices.
 
 ---
 
-## 12. 📉 Deprecated Animation Libraries
+## 26. 🚷 Libraries That Enable Dangerous DOM Manipulation
 
-### 12.1 
+### 26.1  Helpers
 
-- **Status**: No longer actively maintained.
-- **Issues**: Performance regressions on modern browsers.
-- **Better Alternatives**:  (GreenSock Animation Platform), .
+- Libraries that heavily rely on  without sanitization (e.g., older versions of , ) expose apps to XSS.
 
-### 12.2 
+### 26.2 Deprecated Templating Engines
 
-- **Issues**: Bloated, dated UI widgets.
-- **Alternatives**: Native Web Components, React/Vue component libraries.
+- ,  older versions had XSS vectors if escaping is not done properly.
 
 ---
 
-## 13. 🧩 Outdated UI Frameworks
+## 27. 🧨 Dangerous Regex Usage in Libraries
 
-### 13.1 
+- Some libraries use regex patterns vulnerable to ReDoS (Regular Expression Denial of Service).
 
-- **Problem**: Old grid system, not fully responsive for modern devices.
-- **Security**: Vulnerabilities in outdated versions.
-- **Recommendation**: Upgrade to Bootstrap 5 or switch to Tailwind CSS.
+### Examples:
 
-### 13.2 
+| Library              | Problematic Regex | Impact                      |
+|----------------------|-------------------|-----------------------------|
+|   | Complex patterns  | Can cause event loop blocking|
+|         | Certain patterns  | Potential DoS attacks       |
 
-- **Status**: Discontinued.
-- **Issue**: No support for modern CSS Grid or Flexbox.
-- **Better Option**: Bulma, Tailwind CSS.
-
----
-
-## 14. 📛 Suspicious npm Packages to Avoid (Recent Examples)
-
-| Package             | Type              | Description                          |
-|---------------------|-------------------|------------------------------------|
-|         | Malware           | Injected coin miners (2023 incident) |
-|            | Malicious Code    | Destroyed builds due to geopolitical conflict |
-|              | Hijacked Package  | Injected malware in 2022            |
-
-**Tip:** Always check package integrity using tools like  and scan for unexpected dependencies.
+- **Tip**: Avoid untrusted user input in regexes; monitor for CVEs on regex use.
 
 ---
 
-## 15. 🔧 Problematic Legacy Build Tools
+## 28. 🚩 Event Hijacking and Injection Vectors
 
-### 15.1 
+- Libraries that do not properly sanitize event handlers or attach listeners globally.
 
-- **Status**: Declining usage.
-- **Issues**: Slow builds, complex config.
-- **Alternatives**: , , .
+### Example
 
-### 15.2  (Old presets/plugins)
-
-- **Risk**: Legacy preset-env configs cause bloat and slow compilation.
-- **Best Practice**: Use minimal, targeted configs for browserslist.
+- Older  versions allowed unsafe binding to events leading to event injection.
 
 ---
 
-## 16. 🛠️ Risky Utility Libraries
+## 29. 🚨 Deprecated Cryptography Libraries
 
-### 16.1 
+### 29.1  (Older versions)
 
-- **Reason**: Superseded by native JS string methods.
-- **Security**: Older versions may have bugs leading to unexpected results.
-- **Alternative**: Use ES6+ string utilities.
+- Vulnerable to padding oracle attacks and weak ciphers.
+- **Recommendation**: Use native Node.js  module or vetted libraries like .
 
-### 16.2 
+### 29.2  (Stanford JS Crypto Library)
 
-- **Status**: Abandoned.
-- **Issue**: Incorrect date parsing leading to subtle bugs.
-- **Replace with**:  or .
+- Older versions had timing attacks.
+- Keep updated or switch to audited crypto packages.
 
 ---
 
-## 17. 🚫 Popular but Dangerous Practices in JS Libraries
+## 30. ⚠️ Dangerous Cross-Origin and CORS Misconfigurations
 
-### 17.1 Using eval() or new Function()
+- Libraries with lax CORS defaults expose applications to CSRF and data leakage.
 
-- Many old libraries use  or  internally for dynamic code generation.
-- **Risks**: Opens doors to XSS, code injection.
-- **Example**: Older versions of Handlebars.js and some template engines.
+### Problematic Examples
 
-### 17.2 Polluting Global Scope
-
-- Libraries that create or modify global variables or prototypes.
-- **Impact**: Risk of naming collisions, unpredictable behavior.
-- **Example**: Prototype.js, MooTools.
+-  npm package used with  and  combined.
+- Proxy middleware with unrestricted forwarding.
 
 ---
 
-## 18. 🔄 Problematic Dependency Chains
+## 31. 🧩 Problematic UI Libraries Causing Memory Leaks
 
-- Many libraries rely on vulnerable or deprecated dependencies.
-- Example:  depending on old  or .
-- **Advice**: Regularly audit , avoid deep, unmanaged dependency trees.
+### 31.1  (1.x)
 
----
+- Known for causing memory leaks with complex digest cycles.
+- Legacy apps suffer from degraded performance.
 
-## 19. 📜 Historical Incidents of Supply Chain Attacks
+### 31.2  (with improper cleanup)
 
-- 2018:  attack showed how an npm package can be hijacked.
-- 2022:  package hijacked, malicious code inserted.
-- 2023:  package sabotaged projects due to geopolitical reasons.
-- **Lesson**: Always lock your dependency tree and verify packages.
+- Libraries or components that do not clean up timers, listeners can cause memory leaks over time.
 
 ---
 
-## 20. 🚨 Unsafe Default Configurations in Popular Libraries
+## 32. 💻 Dangerous CLI Tools (npm Packages)
 
-### 20.1  Hot Module Replacement (HMR)
+- CLI tools that run post-install scripts can execute arbitrary code.
 
-- When enabled without proper CORS and security headers, can expose internal dev server to attacks.
+### Examples
 
-### 20.2 
-
-- Using default  or lax CORS leads to hijacking risks.
-
----
-
-## 21. 🧪 Risky Experimental Libraries
-
-- Libraries like  have known exploits.
-- Experimental packages without active communities often contain unpatched bugs.
+-  hijacked package (2020).
+- Always audit CLI tools; prefer packages with minimal install scripts.
 
 ---
 
-## 22. 🔐 Libraries That Frequently Require Security Patches
+## 33. 🛡️ Risky Data Parsing Libraries
 
-| Library         | Reason                  | Notes                      |
-|-----------------|-------------------------|----------------------------|
-|     | Template injection risk | Update to latest            |
-|  | Deserialization attacks | Patch urgently             |
-|        | Arbitrary code execution | Avoid unsafe loading       |
+### 33.1  (Older Versions)
 
----
+- Vulnerable to XML External Entity (XXE) attacks.
+- Update to recent versions with XXE mitigation.
 
-## 23. 📚 Resources for Staying Updated
+### 33.2 
 
-- [Snyk Vulnerability DB](https://snyk.io/vuln)
-- [npm audit](https://docs.npmjs.com/cli/v9/commands/npm-audit)
-- [GitHub Security Advisory](https://github.com/advisories)
-- [OSSF Scorecards](https://github.com/ossf/scorecard)
+- Older versions vulnerable to CSV Injection when handling untrusted CSV files.
 
 ---
 
-*To be continued... Ask for Part 3 to go deeper into examples, analysis, and large lists.*
+## 34. ⚠️ Dangerous Package Naming Collisions
+
+- Attackers publish malicious packages with names similar to popular ones.
+
+### Examples
+
+| Intended Package | Malicious Package     | Description                    |
+|------------------|----------------------|-------------------------------|
+|          | ,    | Typosquatting attack          |
+|           |               | Malicious backdoor injected   |
+
+- **Prevention**: Use exact package names; verify publisher identity.
+
+---
+
+## 35. 🚀 Libraries With Hidden Backdoors or Malware
+
+-  incident (2018).
+- Several other npm packages in 2022-2024 discovered with crypto mining or data exfiltration scripts hidden.
+
+---
+
+## 36. 🕵️‍♂️ How to Detect and Avoid Harmful Libraries
+
+### 36.1 Use Automated Tools
+
+- 
+- 
+- 
+
+### 36.2 Manual Checks
+
+- Review package repository activity.
+- Check for open security issues.
+- Verify maintainers and contributors.
+
+---
+
+## 37. 📝 Best Practices to Avoid Dangerous Libraries
+
+- Prefer well-maintained, actively developed packages.
+- Avoid packages with few downloads and no recent updates.
+- Check for vulnerabilities before adding dependencies.
+- Use lock files ( or ).
+- Monitor and upgrade dependencies regularly.
+
+---
+
+## 38. 🧠 Final Notes
+
+Using third-party libraries accelerates development but increases risk if not carefully managed. Understanding:
+
+- **Why** a library might be dangerous
+- **How** vulnerabilities manifest
+- **When** to update or replace libraries
+
+is crucial to maintain secure and performant JavaScript applications.
+
+---
+
