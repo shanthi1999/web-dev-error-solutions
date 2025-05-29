@@ -1,24 +1,15 @@
-name: 📁 Generate Error Documentation from Issues
+name: 📩 Store GitHub Issue as Markdown
 
 on:
   issues:
     types: [opened]
 
-permissions:
-  contents: write
-
 jobs:
-  generate-doc:
+  store_issue:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up GitHub Actions as user
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Detect topic from title + HTML-stripped body
         id: topic
@@ -26,38 +17,53 @@ jobs:
           TITLE="${{ github.event.issue.title }}"
           BODY="${{ github.event.issue.body }}"
 
-          # Remove HTML tags
           BODY_STRIPPED=$(echo "$BODY" | sed 's/<[^>]*>//g')
           COMBINED=$(echo "$TITLE $BODY_STRIPPED" | tr '[:upper:]' '[:lower:]')
 
-          # Detect topic
+          TOPIC="general"
+
           if echo "$COMBINED" | grep -q "javascript"; then
-            echo "topic=javascript" >> $GITHUB_OUTPUT
+            TOPIC="javascript"
           elif echo "$COMBINED" | grep -q "css"; then
-            echo "topic=css" >> $GITHUB_OUTPUT
+            TOPIC="css"
           elif echo "$COMBINED" | grep -q "react"; then
-            echo "topic=react" >> $GITHUB_OUTPUT
+            TOPIC="react"
           elif echo "$COMBINED" | grep -q "jquery"; then
-            echo "topic=jquery" >> $GITHUB_OUTPUT
-          else
-            echo "topic=general" >> $GITHUB_OUTPUT
+            TOPIC="jquery"
           fi
 
-      - name: Sanitize folder name from issue title
+          echo "Detected topic: $TOPIC"
+          echo "topic=$TOPIC" >> $GITHUB_OUTPUT
+
+      - name: Generate folder name from issue title
         id: folder
         run: |
-          FOLDER=$(echo "${{ github.event.issue.title }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
-          echo "folder=$FOLDER" >> $GITHUB_OUTPUT
+          SAFE_NAME=$(echo "${{ github.event.issue.title }}" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | sed 's/^-*//;s/-*$//')
+          echo "folder=$SAFE_NAME" >> $GITHUB_OUTPUT
 
-      - name: Create README.md from issue
+      - name: Print debug info
+        run: |
+          echo "Topic: ${{ steps.topic.outputs.topic }}"
+          echo "Folder: ${{ steps.folder.outputs.folder }}"
+
+      - name: Save issue as markdown file
         run: |
           mkdir -p "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}"
-          echo "# 🐞 ${{ github.event.issue.title }}" > "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
-          echo "" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
-          echo "${{ github.event.issue.body }}" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
 
-      - name: Commit and push
+          FILE="errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/issue.md"
+
+          {
+            echo "# 🐞 ${{ github.event.issue.title }}"
+            echo ""
+            echo "Reported by: [@${{ github.event.issue.user.login }}](${{ github.event.issue.user.html_url }})"
+            echo ""
+            echo "${{ github.event.issue.body }}"
+          } > "$FILE"
+
+      - name: Commit and push markdown file
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "📚 Add error doc: ${{ github.event.issue.title }}" || echo "Nothing to commit"
+          git commit -m "📚 Add error doc: ${{ github.event.issue.title }}" || echo "No changes to commit"
           git push
