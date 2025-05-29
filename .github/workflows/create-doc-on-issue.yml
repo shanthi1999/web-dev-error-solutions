@@ -44,11 +44,18 @@ jobs:
           echo "folder=$FOLDER" >> $GITHUB_OUTPUT
 
       - name: Create README.md from issue
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          FOLDER: ${{ steps.folder.outputs.folder }}
+          TOPIC: ${{ steps.topic.outputs.topic }}
         run: |
-          mkdir -p "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}"
-          echo "# 🐞 ${{ github.event.issue.title }}" > "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
-          echo "" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
-          echo "${{ github.event.issue.body }}" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+          mkdir -p "errors/$TOPIC/$FOLDER"
+          {
+            echo "# 🐞 $ISSUE_TITLE"
+            echo
+            printf "%s\n" "$ISSUE_BODY"
+          } > "errors/$TOPIC/$FOLDER/README.md"
 
       - name: Commit and push
         run: |
