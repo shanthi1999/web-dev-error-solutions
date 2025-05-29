@@ -22,8 +22,11 @@ jobs:
 
       - name: Detect topic from title and body
         id: topic
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          CONTENT="$(echo '${{ github.event.issue.title }} ${{ github.event.issue.body }}' | tr '[:upper:]' '[:lower:]')"
+          CONTENT="$(echo "$ISSUE_TITLE $ISSUE_BODY" | tr '[:upper:]' '[:lower:]')"
 
           if echo "$CONTENT" | grep -q "react"; then
             echo "topic=react" >> $GITHUB_OUTPUT
@@ -44,22 +47,14 @@ jobs:
           echo "folder=$FOLDER" >> $GITHUB_OUTPUT
 
       - name: Create README.md from issue
-        env:
-          ISSUE_TITLE: ${{ github.event.issue.title }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
-          FOLDER: ${{ steps.folder.outputs.folder }}
-          TOPIC: ${{ steps.topic.outputs.topic }}
         run: |
-          mkdir -p "errors/$TOPIC/$FOLDER"
-          {
-            echo "# 🐞 $ISSUE_TITLE"
-            echo
-            printf "%s\n" "$ISSUE_BODY"
-          } > "errors/$TOPIC/$FOLDER/README.md"
+          mkdir -p "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}"
+          echo "# 🐞 ${{ github.event.issue.title }}" > "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+          echo "" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+          echo "${{ github.event.issue.body }}" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
 
       - name: Commit and push
         run: |
           git add .
-          TITLE="${{ github.event.issue.title }}"
-          git commit -m "📚 Add error doc: $TITLE" || echo "Nothing to commit"
+          git commit -m "📚 Add error doc: ${{ github.event.issue.title }}" || echo "Nothing to commit"
           git push
