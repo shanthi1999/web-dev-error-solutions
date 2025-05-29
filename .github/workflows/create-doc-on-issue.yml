@@ -53,5 +53,6 @@ jobs:
       - name: Commit and push
         run: |
           git add .
-          git commit -m "📚 Add error doc: ${{ github.event.issue.title }}" || echo "Nothing to commit"
+          TITLE="${{ github.event.issue.title }}"
+          git commit -m "📚 Add error doc: $TITLE" || echo "Nothing to commit"
           git push
