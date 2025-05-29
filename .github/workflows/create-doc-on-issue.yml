@@ -5,7 +5,7 @@ on:
     types: [opened]
 
 permissions:
-  contents: write  # ✅ Needed for git push
+  contents: write  # Needed for git push
 
 jobs:
   generate-doc:
@@ -20,18 +20,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Detect topic from issue body
+      - name: Detect topic from issue title + body
         id: topic
         run: |
+          TITLE="${{ github.event.issue.title }}"
           BODY="${{ github.event.issue.body }}"
-          BODY_LOWER=$(echo "$BODY" | tr '[:upper:]' '[:lower:]')
-          if echo "$BODY_LOWER" | grep -q "javascript"; then
+          COMBINED=$(echo "$TITLE $BODY" | tr '[:upper:]' '[:lower:]')
+
+          if echo "$COMBINED" | grep -q "javascript"; then
             echo "topic=javascript" >> $GITHUB_OUTPUT
-          elif echo "$BODY_LOWER" | grep -q "css"; then
+          elif echo "$COMBINED" | grep -q "css"; then
             echo "topic=css" >> $GITHUB_OUTPUT
-          elif echo "$BODY_LOWER" | grep -q "react"; then
+          elif echo "$COMBINED" | grep -q "react"; then
             echo "topic=react" >> $GITHUB_OUTPUT
-          elif echo "$BODY_LOWER" | grep -q "jquery"; then
+          elif echo "$COMBINED" | grep -q "jquery"; then
             echo "topic=jquery" >> $GITHUB_OUTPUT
           else
             echo "topic=general" >> $GITHUB_OUTPUT
