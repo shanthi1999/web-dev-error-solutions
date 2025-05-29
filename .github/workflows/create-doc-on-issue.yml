@@ -1,4 +1,4 @@
-name: Create Error Doc from Issue
+name: 📁 Generate Error Documentation from Issues
 
 on:
   issues:
@@ -7,25 +7,50 @@ on:
 jobs:
   generate-doc:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.OPENROCKETS_PAT }}  # Use your PAT stored in repo secrets
 
-      - name: Set up Git
+      - name: Set up Git user
         run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
+          git config user.name "openrocketsofficial"
+          git config user.email "motiontel@outlook.com"  # Use the real email of your alt account
 
-      - name: Create Folder and README
+      - name: Detect topic from issue body
+        id: topic
         run: |
-          SAFE_TITLE=$(echo "${{ github.event.issue.title }}" | tr ' ' '-' | tr -cd '[:alnum:]-')
-          mkdir -p "errors/$SAFE_TITLE"
-          echo "## Error Report: $SAFE_TITLE\n\n---\n\n${{ github.event.issue.body }}" > "errors/$SAFE_TITLE/README.md"
+          BODY="${{ github.event.issue.body }}"
+          BODY_LOWER=$(echo "$BODY" | tr '[:upper:]' '[:lower:]')
+          if echo "$BODY_LOWER" | grep -q "javascript"; then
+            echo "topic=javascript" >> $GITHUB_OUTPUT
+          elif echo "$BODY_LOWER" | grep -q "css"; then
+            echo "topic=css" >> $GITHUB_OUTPUT
+          elif echo "$BODY_LOWER" | grep -q "react"; then
+            echo "topic=react" >> $GITHUB_OUTPUT
+          elif echo "$BODY_LOWER" | grep -q "jquery"; then
+            echo "topic=jquery" >> $GITHUB_OUTPUT
+          else
+            echo "topic=general" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Commit and Push
+      - name: Sanitize folder name from issue title
+        id: folder
+        run: |
+          FOLDER=$(echo "${{ github.event.issue.title }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+          echo "folder=$FOLDER" >> $GITHUB_OUTPUT
+
+      - name: Create README.md from issue
+        run: |
+          mkdir -p "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}"
+          echo "# 🐞 ${GITHUB_EVENT_ISSUE_TITLE}" > "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+          echo "" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+          echo "${{ github.event.issue.body }}" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+
+      - name: Commit and push
         run: |
           git add .
-          git commit -m "Add error doc: ${{ github.event.issue.title }}"
+          git commit -m "📚 Add error doc: ${{ github.event.issue.title }}" || echo "Nothing to commit"
           git push
