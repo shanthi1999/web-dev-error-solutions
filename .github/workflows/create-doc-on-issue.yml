@@ -11,14 +11,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.OPENROCKETS_PAT }}  # Use your PAT stored in repo secrets
 
-
-      - name: Set up Git user
+      - name: Set up GitHub Actions as user
         run: |
-          git config user.name "openrocketsofficial"
-          git config user.email "motiontel@outlook.com"  # Use the real email of your alt account
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Detect topic from issue body
         id: topic
