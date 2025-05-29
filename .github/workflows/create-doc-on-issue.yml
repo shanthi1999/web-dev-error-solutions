@@ -15,10 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up GitHub Actions as user
+      - name: Set up Git identity as real user
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "openrocketsofficial"
+          git config user.email "motiontel@outlook.com"
 
       - name: Detect topic from title and body
         id: topic
@@ -53,8 +53,11 @@ jobs:
           echo "" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
           echo "${{ github.event.issue.body }}" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
 
-      - name: Commit and push
+      - name: Commit and push with PAT
+        env:
+          TOKEN: ${{ secrets.OPENROCKETS_PAT }}
         run: |
           git add .
           git commit -m "📚 Add error doc: ${{ github.event.issue.title }}" || echo "Nothing to commit"
-          git push
+          git remote set-url origin https://openrocketsofficial:${TOKEN}@github.com/${{ github.repository }}
+          git push origin HEAD
