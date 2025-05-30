@@ -10,7 +10,7 @@
 
 
 
-<p align="center">
+<p align="left">
   <span>A comprehensive, community-driven knowledge base for diagnosing and resolving common web development errors.</span><br>
   <span>Accelerate your learning and productivity with clear, concise, and actionable solutions to persistent coding challenges!</span>
 </p>
