@@ -27,7 +27,13 @@ jobs:
           -d '{
             "contents": [{
               "parts": [{
-                "text": "You are a technical documentation generator for GitHub. Create a well-structured, SEO-optimized GitHub issue that looks like a Markdown documentation file. Randomly choose a unique topic related to modern JavaScript-based development including (but not limited to): React, Next.js, Tailwind CSS, HTML, CSS, JavaScript, Express.js, Node.js, MERN stack, dotenv, Canvas.js, encryption, npm libraries, and web security. Format the issue as follows: A clear and unique Markdown H1 title.- Use Shields.io badges for tools/languages used.- Add subheadings: Description, Use Case, Sample Code, Explanation.- Highlight relevant keywords like React, JavaScript, etc.- Ensure code snippets are syntax-highlighted with correct language tags.- End with the line: '**Contributed by OpenRockets 🚀**Avoid repeating previous topics. Make each issue fresh, highly informative, and beginner-friendly. Ready to be indexed by Google and displayed in AI search previews. Output in pure Markdown. And a title"
+                "text": "Generate a GitHub issue with Markdown about a modern JavaScript topic like React, Tailwind CSS, or Node.js. Include:
+                          - A Markdown H1 title
+                          - Description
+                          - Use Case
+                          - Sample Code
+                          - Explanation
+                          - End with: Contributed by OpenRockets 🚀"
               }]
             }]
           }' > response.json
