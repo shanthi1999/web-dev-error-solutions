@@ -1,1 +1,1 @@
-Troubleshooting "Module Not Found" Errors in Node.js
+Troubleshooting "Module not found: Error: Can't resolve '...' in '...'" in Next.js
