@@ -1,3 +1,5 @@
+# 🐞 Creating a CSS-Only Expanding Card with a Smooth Transition
+
 
 This document details how to create an expanding card effect using only CSS.  No JavaScript is required! This effect utilizes CSS transitions and transforms to achieve a smooth, visually appealing animation.  This is a great example of leveraging CSS3's power for interactive elements without relying on JavaScript.
 

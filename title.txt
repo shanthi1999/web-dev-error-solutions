@@ -1,1 +1,1 @@
-Handling CORS Errors in a Node.js Express.js API
+Creating a CSS-Only Expanding Card with a Smooth Transition
