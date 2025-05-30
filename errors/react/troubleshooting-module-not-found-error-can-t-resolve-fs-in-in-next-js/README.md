@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting "Module not found: Error: Can't resolve 'fs' in '...' " in Next.js
+
 
 ## Description of the Error
 
