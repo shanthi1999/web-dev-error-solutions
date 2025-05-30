@@ -1,1 +1,1 @@
-Troubleshooting `dotenv` Configuration Issues in Node.js
+Troubleshooting `dotenv` Configuration in Node.js Applications
