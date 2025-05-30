@@ -1,3 +1,5 @@
+# 🐞 Handling CORS Errors in a Next.js Application
+
 
 This document addresses a common problem encountered when developing Next.js applications that interact with external APIs: **CORS (Cross-Origin Resource Sharing) errors**.
 
