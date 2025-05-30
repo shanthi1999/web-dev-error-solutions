@@ -1,3 +1,5 @@
+# 🐞 Creating a CSS-only Circular Progress Bar
+
 
 This document details how to create a circular progress bar using only CSS.  This technique avoids the need for JavaScript, keeping the code lightweight and improving performance. We'll leverage CSS's `clip-path` property and some clever calculations to achieve the desired effect.
 
