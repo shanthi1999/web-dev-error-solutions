@@ -1,3 +1,5 @@
+# 🐞 Creating a Pure CSS Loading Spinner
+
 
 This document details how to create a visually appealing loading spinner using only CSS.  We'll utilize CSS animations and transformations to achieve a smooth, rotating effect without relying on JavaScript or image assets.  This technique is lightweight and performant.
 
