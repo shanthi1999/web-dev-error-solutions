@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting "ReferenceError: process is not defined" in Next.js
+
 
 This document addresses the common "ReferenceError: process is not defined" error encountered in Next.js applications, particularly when using packages that rely on Node.js's `process` global object within the browser environment.  This error arises because the `process` object is a Node.js global, not available in the browser's JavaScript environment.
 
