@@ -1,32 +1,32 @@
-name: Auto Create Issues Every 10 Minutes
-
-on:
-  schedule:
-    - cron: '*/10 * * * *'
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  issues: write
-
-jobs:
-  create-issue:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: ✅ Debug - Workflow started
-        run: echo "🟢 Workflow triggered successfully!"
-
-      - name: Generate Issue Using Gemini 1.5 Flash
-        id: generate
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$GEMINI_API_KEY" \
-          -H "Content-Type: application/json" \
-          -d '{
-            "contents": [{
-              "parts": [{
+name: Auto Create Issues Every 10 Minutes  
+  
+on:  
+  schedule:  
+    - cron: '*/10 * * * *'  
+  workflow_dispatch:  
+  
+permissions:  
+  contents: read  
+  issues: write  
+  
+jobs:  
+  create-issue:  
+    runs-on: ubuntu-latest  
+  
+    steps:  
+      - name: ✅ Debug - Workflow started  
+        run: echo "🟢 Workflow triggered successfully!"  
+  
+      - name: Generate Issue Using Gemini 1.5 Flash  
+        id: generate  
+        env:  
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}  
+        run: |  
+          curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$GEMINI_API_KEY" \  
+          -H "Content-Type: application/json" \  
+          -d '{  
+            "contents": [{  
+              "parts": [{  
                 "text": "You are a technical documentation generator for GitHub. Create a well-structured, SEO-optimized GitHub issue that looks like a Markdown documentation file. Randomly choose a unique topic related to modern JavaScript-based development including (but not limited to): React, Next.js, Tailwind CSS, HTML, CSS, JavaScript, Express.js, Node.js, MERN stack, dotenv, Canvas.js, encryption, npm libraries, and web security.
 
 Format the issue as follows:
@@ -38,47 +38,34 @@ Format the issue as follows:
 - End with the line: '**Contributed by OpenROCKETS 🚀**'
 
 Avoid repeating previous topics. Make each issue fresh, highly informative, and beginner-friendly. Ready to be indexed by Google and displayed in AI search previews. Output in pure Markdown."
-              }]
-            }]
-          }' > response.json
-
-      - name: Extract Title, Body, and Labels from Gemini Response
-        id: parse
-        run: |
-          CONTENT=$(jq -r '.candidates[0].content.parts[0].text' response.json)
-          echo "$CONTENT" > full.md
-
-          # Extract Title (assumes first line is "# Title")
-          TITLE=$(head -n 1 full.md | sed 's/^# //')
-          echo "$TITLE" > title.txt
-
-          # Extract Body (everything after first line)
-          tail -n +2 full.md > issue-body.md
-
-          echo "title=$TITLE" >> $GITHUB_ENV
-
-          # Extract up to 506 keywords (labels) from content
-          grep -oiE '\b(JavaScript|React|Next\.js|Tailwind CSS|HTML|CSS|Node\.js|Express\.js|MERN|dotenv|Canvas\.js|encryption|npm|frontend|backend|API|hooks|state|props|SSR|CSR|token|authentication|markdown|code|debug|performance|UX|UI|hooks|router|pages|component|fullstack)\b' full.md | \
-          sort -u | head -n 506 > labels.txt
-
-          # Join labels as comma-separated list
-          LABELS=$(paste -sd, labels.txt)
-          echo "labels=$LABELS" >> $GITHUB_ENV
-
-      - name: Debug - Show extracted content
-        run: |
-          echo "TITLE:"
-          cat title.txt
-          echo "BODY:"
-          cat issue-body.md
-          echo "LABELS:"
-          cat labels.txt
-
-      - name: Create GitHub Issue
-        uses: peter-evans/create-issue-from-file@v5
-        with:
-          title: ${{ env.title }}
-          content-filepath: issue-body.md
-          labels: ${{ env.labels }}
-        env:
+              }]  
+            }]  
+          }' > response.json  
+  
+      - name: Extract Title and Body from Gemini Response  
+        id: parse  
+        run: |  
+          CONTENT=$(jq -r '.candidates[0].content.parts[0].text' response.json)  
+          echo "$CONTENT" > full.md  
+  
+          TITLE=$(head -n 1 full.md | sed 's/^# //')  
+          echo "$TITLE" > title.txt  
+          tail -n +2 full.md > issue-body.md  
+  
+          echo "title=$TITLE" >> $GITHUB_ENV  # Pass title to next step  
+  
+      - name: Debug - Show extracted content  
+        run: |  
+          echo "TITLE:"  
+          cat title.txt  
+          echo "BODY:"  
+          cat issue-body.md  
+  
+      - name: Create GitHub Issue  
+        uses: peter-evans/create-issue-from-file@v5  
+        with:  
+          title: ${{ env.title }}  
+          content-filepath: issue-body.md  
+          labels: react, ai-generated  
+        env:  
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
