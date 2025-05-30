@@ -27,13 +27,13 @@ jobs:
           -d '{
             "contents": [{
               "parts": [{
-                "text": "Generate a GitHub issue with Markdown about a modern JavaScript topic like React, Tailwind CSS, or Node.js. Include:
+                "text": "Generate a detailed documentation with Markdown about a modern JavaScript topic like React, NextJS, MERN-stack, VanillaJS, ExpressJS, DotEnv, Langchain, OpenAI-API-javascript,  Tailwind CSS, Bootstrap or Node.js. Include:
                           - A Markdown H1 title
                           - Description
                           - Use Case
                           - Sample Code
                           - Explanation
-                          - End with: Contributed by OpenRockets 🚀"
+                          - End with a link to https://www.github.com/openrockets"
               }]
             }]
           }' > response.json
