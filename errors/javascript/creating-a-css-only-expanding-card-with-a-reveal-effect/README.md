@@ -1,3 +1,5 @@
+# 🐞 Creating a CSS-only Expanding Card with a Reveal Effect
+
 
 This document details a CSS-only technique to create an expanding card with a reveal effect.  The effect showcases a hidden content area that smoothly expands when the card is hovered over. This is achieved using CSS transitions, transforms, and the `:hover` pseudo-class, avoiding the need for JavaScript.  This example utilizes plain CSS3; no frameworks like Tailwind are necessary.
 
