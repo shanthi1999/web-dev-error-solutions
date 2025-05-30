@@ -1,3 +1,5 @@
+# 🐞 ## Issue: Unexpected re-renders causing performance degradation
+
 
 **Description:**
 

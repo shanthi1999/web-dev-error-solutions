@@ -1,1 +1,1 @@
-## Issue: Unexpected re-renders due to shallow comparison in useState
+## Issue: Unexpected re-renders causing performance degradation
