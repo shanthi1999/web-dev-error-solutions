@@ -1,3 +1,5 @@
+# 🐞 Creating a CSS-only Expanding Card with Smooth Transitions
+
 
 This document details the creation of an expanding card effect using only CSS.  This effect involves a card that smoothly expands to reveal more content when hovered over, and then smoothly collapses back to its original size when the hover is removed.  We'll utilize CSS transitions and transforms for a clean and elegant result.  This technique is widely compatible across browsers and doesn't require any JavaScript.
 
