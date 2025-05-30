@@ -1,1 +1,1 @@
-Handling Asynchronous Operations in React with `useEffect` and `async/await`
+Handling Asynchronous Operations in React with useEffect and Promises
