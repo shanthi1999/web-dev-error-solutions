@@ -33,7 +33,11 @@ jobs:
         run: |
           CONTENT=$(jq -r '.candidates[0].content.parts[0].text' response.json)
           echo "$CONTENT" > full.md
-          head -n 1 full.md | sed 's/^# //' > title.txt
+
+          TITLE=$(head -n 1 full.md | sed 's/^# //')
+          echo "$TITLE" > title.txt
+          echo "title=$TITLE" >> "$GITHUB_OUTPUT"
+
           tail -n +2 full.md > issue-body.md
 
       - name: Debug - Show extracted content
