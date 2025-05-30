@@ -1,1 +1,1 @@
-Troubleshooting "ReferenceError: process is not defined" in Next.js
+Troubleshooting "Module Not Found" Errors in Node.js with `require()`
