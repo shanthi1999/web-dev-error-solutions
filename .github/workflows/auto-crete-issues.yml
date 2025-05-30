@@ -33,7 +33,7 @@ jobs:
                           - full code of fixing step by step
                           - external references with links
                           - Explanation
-                          - End with: 'Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.'"
+                          - End with: Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish."
               }]
             }]
           }' > response.json
