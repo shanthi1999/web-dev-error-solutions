@@ -19,23 +19,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Download issue content
+      - name: Download latest issue content
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue list --limit 1 --state open --json number,title,body \
-          > latest-issue.json
-
-          TITLE=$(jq -r '.[0].title' latest-issue.json)
-          BODY=$(jq -r '.[0].body' latest-issue.json)
-          echo "$TITLE" > title.txt
-          echo "$BODY" > body.txt
+          gh issue list --limit 1 --state open --json number,title,body > latest-issue.json
+          jq -r '.[0].title' latest-issue.json > title.txt
+          jq -r '.[0].body' latest-issue.json > body.txt
 
       - name: Detect topic from title and body
         id: topic
         run: |
           CONTENT=$(cat title.txt body.txt | tr '[:upper:]' '[:lower:]')
-
           if echo "$CONTENT" | grep -q "react"; then
             echo "topic=react" >> $GITHUB_OUTPUT
           elif echo "$CONTENT" | grep -q "javascript"; then
@@ -60,6 +55,11 @@ jobs:
           echo "# 🐞 $(cat title.txt)" > "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
           echo "" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
           cat body.txt >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+
+      - name: Set up Git identity as real user
+        run: |
+          git config user.name "openrocketsofficial"
+          git config user.email "motiontel@outlook.com"
 
       - name: Commit and push with PAT
         env:
