@@ -57,6 +57,6 @@ jobs:
         with:
           title: ${{ env.title }}
           content-filepath: issue-body.md
-          labels: react, ai-generated
+          labels: documentation, web
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
