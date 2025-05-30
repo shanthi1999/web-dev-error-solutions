@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting Unexpected Behavior with `dotenv` in Node.js
+
 
 This document addresses a common issue encountered when using the `dotenv` package in Node.js applications:  the inability to load environment variables correctly, resulting in undefined or unexpected values. This often manifests as runtime errors or incorrect application behavior.
 
