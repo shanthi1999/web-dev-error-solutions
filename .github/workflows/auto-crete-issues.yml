@@ -34,7 +34,7 @@ jobs:
                           - full code of fixing step by step
                           - external references with links
                           - Explanation
-                          - End with <a href="https://www.github.com/openrockets">OpenRockets open-source</a>"
+                          - End with: 'Copyrights © OpenRockets Open-source Network. Free to use, copy, share, edit or publish.'"
               }]
             }]
           }' > response.json
