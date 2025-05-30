@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting "Module not found: Error: Can't resolve '...' in..." in Node.js
+
 
 This document addresses a common error encountered in Node.js projects, particularly when working with modules and `require()` or `import` statements:  `"Module not found: Error: Can't resolve '...' in..."`. This error indicates that Node.js cannot locate the specified module within its search paths.
 
