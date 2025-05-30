@@ -30,11 +30,10 @@ jobs:
                 "text": "Generate a documentation with Markdown about a randomly chosen problem developers face in React, NextJS, MERN-stack, VanillaJS, ExpressJS, DotEnv, Langchain, OpenAI-API-javascript,  Tailwind CSS, Bootstrap or Node.js. Include:
                           - A Markdown H1 title
                           - Description of the error
-                          - cause
                           - full code of fixing step by step
                           - external references with links
                           - Explanation
-                          - End with: 'Copyrights © OpenRockets Open-source Network. Free to use, copy, share, edit or publish.'"
+                          - End with: 'Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.'"
               }]
             }]
           }' > response.json
