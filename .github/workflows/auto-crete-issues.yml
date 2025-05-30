@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: ✅ Debug - Workflow started
+        run: echo "🟢 Workflow triggered successfully!"
+
       - name: Generate Issue Using Gemini 1.5 Flash
         id: generate
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          curl -s -X POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$GEMINI_API_KEY \
+          curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$GEMINI_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{
             "contents": [{
@@ -29,13 +32,16 @@ jobs:
         id: parse
         run: |
           CONTENT=$(jq -r '.candidates[0].content.parts[0].text' response.json)
-
           echo "$CONTENT" > full.md
-
-          TITLE=$(head -n 1 full.md | sed 's/^# //')
-          echo "$TITLE" > title.txt
-
+          head -n 1 full.md | sed 's/^# //' > title.txt
           tail -n +2 full.md > issue-body.md
+
+      - name: Debug - Show extracted content
+        run: |
+          echo "TITLE:"
+          cat title.txt
+          echo "BODY:"
+          cat issue-body.md
 
       - name: Create GitHub Issue
         uses: peter-evans/create-issue-from-file@v5
@@ -45,10 +51,3 @@ jobs:
           labels: react, ai-generated
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Debug - Show files created
-        run: |
-          echo "Title:"
-          cat title.txt
-          echo "Body:"
-          cat issue-body.md
