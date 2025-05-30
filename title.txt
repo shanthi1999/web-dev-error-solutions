@@ -1,1 +1,1 @@
-Troubleshooting `dotenv` Configuration Errors in Node.js
+Handling CORS Errors in a Next.js Application
