@@ -1,1 +1,1 @@
-Troubleshooting "Module not found: Error: Can't resolve '...' in '...'" in Next.js
+Creating a Full-Screen, Vertically Centered Element with CSS

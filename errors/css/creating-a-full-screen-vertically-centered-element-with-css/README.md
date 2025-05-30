@@ -1,3 +1,5 @@
+# 🐞 Creating a Full-Screen, Vertically Centered Element with CSS
+
 
 This document details a common CSS styling trick: creating a vertically centered element that takes up the entire browser viewport height, regardless of the content's size. We'll achieve this using a combination of flexbox and some basic CSS properties. This technique is applicable in both vanilla CSS and CSS frameworks like Tailwind CSS.
 
