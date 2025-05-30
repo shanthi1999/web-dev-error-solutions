@@ -1,1 +1,1 @@
-Troubleshooting `ReferenceError: process is not defined` in a Next.js Browser-Side Script
+Troubleshooting "Module not found" Errors in Next.js Applications
