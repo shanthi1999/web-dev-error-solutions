@@ -1,1 +1,1 @@
-## Issue: Unexpected re-renders causing performance degradation
+## Issue: Unexpected re-renders in functional component with useEffect hook
