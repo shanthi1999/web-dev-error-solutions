@@ -1,3 +1,5 @@
+# 🐞 Creating a Pure CSS Animated Loading Spinner
+
 
 This document details the creation of a visually appealing loading spinner using only CSS.  No JavaScript is required! We'll leverage CSS animations and keyframes to achieve a smooth, rotating effect.  This example uses plain CSS3, but the concept could be easily adapted to frameworks like Tailwind CSS.
 
