@@ -1,3 +1,5 @@
+# 🐞 Handling Asynchronous Operations in React with useEffect and Promises
+
 
 This document addresses a common problem faced by React developers: managing asynchronous operations within functional components to prevent race conditions and ensure data is properly displayed.  Specifically, we'll look at fetching data from an API using `fetch` and handling the promise lifecycle with `useEffect`.
 
