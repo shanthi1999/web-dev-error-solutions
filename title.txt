@@ -1,1 +1,1 @@
-Creating a CSS-Only Expanding Card with a Reveal Animation
+Handling CORS Errors in a Node.js Express.js API

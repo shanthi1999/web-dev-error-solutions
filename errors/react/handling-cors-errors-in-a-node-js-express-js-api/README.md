@@ -1,3 +1,5 @@
+# 🐞 Handling CORS Errors in a Node.js Express.js API
+
 
 This document addresses a common problem faced by developers when building APIs with Node.js and Express.js: **Cross-Origin Resource Sharing (CORS) errors**.  These errors occur when a web application (e.g., a React frontend) makes requests to an API hosted on a different domain, protocol, or port.  The browser, for security reasons, blocks these requests unless the API is configured to allow them.
 
