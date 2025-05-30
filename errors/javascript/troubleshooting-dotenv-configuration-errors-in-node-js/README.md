@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting `dotenv` Configuration Errors in Node.js
+
 
 This document addresses common configuration problems encountered when using the `dotenv` package in Node.js applications.  `dotenv` is crucial for managing environment variables, keeping sensitive information like API keys out of your version control.
 
