@@ -1,1 +1,1 @@
-Troubleshooting `next/image` Optimization in Next.js
+Handling Asynchronous Operations in Node.js with Async/Await
