@@ -1,1 +1,1 @@
-Troubleshooting `ReferenceError: process is not defined` in Next.js
+Creating a CSS-Only Expanding Card with a Reveal Animation
