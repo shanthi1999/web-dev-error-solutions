@@ -1,1 +1,1 @@
-## Issue: Unexpected Re-renders and Performance Degradation with useState and useEffect
+## Issue: Unexpected Re-renders due to Object Comparison in `useEffect` Hook

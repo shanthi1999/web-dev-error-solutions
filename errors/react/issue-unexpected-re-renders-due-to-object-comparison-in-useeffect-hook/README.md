@@ -1,3 +1,5 @@
+# 🐞 ## Issue: Unexpected Re-renders due to Object Comparison in `useEffect` Hook
+
 
 **Description:**
 
