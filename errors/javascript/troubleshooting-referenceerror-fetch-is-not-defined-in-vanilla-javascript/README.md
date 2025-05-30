@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting `ReferenceError: fetch is not defined` in Vanilla JavaScript
+
 
 ## Description of the Error
 

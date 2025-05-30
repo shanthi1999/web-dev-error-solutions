@@ -1,1 +1,1 @@
-Creating a CSS-only Expanding Card with Smooth Transitions
+Troubleshooting `ReferenceError: fetch is not defined` in Vanilla JavaScript
