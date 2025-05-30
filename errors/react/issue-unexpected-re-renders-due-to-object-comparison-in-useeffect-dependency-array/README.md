@@ -1,3 +1,5 @@
+# 🐞 ## Issue: Unexpected re-renders due to object comparison in useEffect dependency array
+
 
 **Description:**
 

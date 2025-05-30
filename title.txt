@@ -1,1 +1,1 @@
-## Issue: Unexpected re-renders in functional component with useEffect hook
+## Issue: Unexpected re-renders due to object comparison in useEffect dependency array
