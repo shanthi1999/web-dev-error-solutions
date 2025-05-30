@@ -1,32 +1,40 @@
 name: 📁 Generate Error Documentation from Issues
 
 on:
-  issues:
-    types: [opened]
+  workflow_run:
+    workflows: ["Auto Create Issues Every 10 Minutes"]
+    types:
+      - completed
 
 permissions:
   contents: write
+  issues: read
 
 jobs:
   generate-doc:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Git identity as real user
+      - name: Download issue content
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name "openrocketsofficial"
-          git config user.email "motiontel@outlook.com"
+          gh issue list --limit 1 --state open --json number,title,body \
+          > latest-issue.json
+
+          TITLE=$(jq -r '.[0].title' latest-issue.json)
+          BODY=$(jq -r '.[0].body' latest-issue.json)
+          echo "$TITLE" > title.txt
+          echo "$BODY" > body.txt
 
       - name: Detect topic from title and body
         id: topic
-        env:
-          ISSUE_TITLE: ${{ github.event.issue.title }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          CONTENT="$(echo "$ISSUE_TITLE $ISSUE_BODY" | tr '[:upper:]' '[:lower:]')"
+          CONTENT=$(cat title.txt body.txt | tr '[:upper:]' '[:lower:]')
 
           if echo "$CONTENT" | grep -q "react"; then
             echo "topic=react" >> $GITHUB_OUTPUT
@@ -43,21 +51,21 @@ jobs:
       - name: Sanitize folder name from issue title
         id: folder
         run: |
-          FOLDER=$(echo "${{ github.event.issue.title }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+          FOLDER=$(cat title.txt | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
           echo "folder=$FOLDER" >> $GITHUB_OUTPUT
 
       - name: Create README.md from issue
         run: |
           mkdir -p "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}"
-          echo "# 🐞 ${{ github.event.issue.title }}" > "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+          echo "# 🐞 $(cat title.txt)" > "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
           echo "" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
-          echo "${{ github.event.issue.body }}" >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
+          cat body.txt >> "errors/${{ steps.topic.outputs.topic }}/${{ steps.folder.outputs.folder }}/README.md"
 
       - name: Commit and push with PAT
         env:
           TOKEN: ${{ secrets.OPENROCKETS_PAT }}
         run: |
           git add .
-          git commit -m "📚 Add error doc: ${{ github.event.issue.title }}" || echo "Nothing to commit"
+          git commit -m "📚 Add error doc from last issue" || echo "Nothing to commit"
           git remote set-url origin https://openrocketsofficial:${TOKEN}@github.com/${{ github.repository }}
           git push origin HEAD
