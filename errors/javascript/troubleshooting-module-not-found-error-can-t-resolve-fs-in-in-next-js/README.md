@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting "Module not found: Error: Can't resolve 'fs' in ..." in Next.js
+
 
 This document addresses a common error encountered when developing Next.js applications:  "Module not found: Error: Can't resolve 'fs' in ...".  This usually happens when attempting to use Node.js modules that directly interact with the file system (like `fs`, `path`, etc.) within the client-side (browser) portion of your application.  Next.js uses server-side rendering (SSR) and the browser environment doesn't have access to the same Node.js modules available on the server.
 
