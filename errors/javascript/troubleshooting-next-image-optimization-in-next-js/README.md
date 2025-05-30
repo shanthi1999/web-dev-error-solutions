@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting `next/image` Optimization in Next.js
+
 
 This document addresses a common issue encountered when using the built-in `next/image` component in Next.js: **incorrect image optimization or blurry images**.  This often stems from misconfigurations related to image sizes, device pixel ratios (DPR), or missing image metadata.
 
