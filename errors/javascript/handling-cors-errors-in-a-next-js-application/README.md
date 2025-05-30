@@ -1,3 +1,5 @@
+# 🐞 Handling CORS Errors in a Next.js Application
+
 
 This document outlines a common problem encountered when developing Next.js applications: Cross-Origin Resource Sharing (CORS) errors.  These errors occur when a web application attempts to make requests to a server on a different domain, protocol, or port than the application itself.  Browsers implement CORS as a security mechanism to prevent malicious websites from making unauthorized requests to other domains.
 

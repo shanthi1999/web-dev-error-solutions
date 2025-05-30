@@ -1,1 +1,1 @@
-Troubleshooting "Module Not Found" Errors in Node.js with `require()`
+Handling CORS Errors in a Next.js Application
