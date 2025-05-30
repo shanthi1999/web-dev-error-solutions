@@ -1,1 +1,1 @@
-Next.js: A Modern React Framework
+Next.js: A React Framework for the Web
