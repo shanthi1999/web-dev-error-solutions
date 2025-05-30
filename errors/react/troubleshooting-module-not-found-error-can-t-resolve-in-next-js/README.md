@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting "Module not found: Error: Can't resolve '...' " in Next.js
+
 
 This document addresses a common error encountered in Next.js applications:  `Module not found: Error: Can't resolve '...'`.  This error usually arises when Next.js cannot locate a required module during the build or runtime process.  The specific module name indicated in the error message will vary depending on the missing dependency.
 
