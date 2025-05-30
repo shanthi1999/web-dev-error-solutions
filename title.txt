@@ -1,1 +1,1 @@
-Handling CORS Errors in a Next.js API Route
+Troubleshooting "Module not found: Error: Can't resolve '...' in..." in Next.js
