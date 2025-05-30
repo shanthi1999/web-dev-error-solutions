@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting `ReferenceError: process is not defined` in a Next.js Browser-Side Script
+
 
 **Description of the Error:**
 
