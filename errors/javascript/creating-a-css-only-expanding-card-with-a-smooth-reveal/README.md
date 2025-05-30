@@ -1,3 +1,5 @@
+# 🐞 Creating a CSS-only Expanding Card with a Smooth Reveal
+
 
 This document details the creation of an expanding card using only CSS.  This effect creates a visually appealing and interactive element without relying on JavaScript.  We'll leverage CSS transitions and transforms to achieve a smooth and engaging animation.
 
