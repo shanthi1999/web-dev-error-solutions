@@ -1,1 +1,1 @@
-Creating a Full-Screen, Vertically Centered Element with CSS
+Troubleshooting `ReferenceError: process is not defined` in Next.js
