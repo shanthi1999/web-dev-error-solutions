@@ -2,8 +2,8 @@ name: Auto Create Issues Every 10 Minutes
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # every 10 minutes
-  workflow_dispatch:        # also allow manual trigger
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
 
 jobs:
   create-issue:
@@ -15,48 +15,40 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          RESPONSE=$(curl -s -X POST https://api.gemini.ai/v1/chat/completions \
-            -H "Authorization: Bearer $GEMINI_API_KEY" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "model": "gemini-1.5-flash",
-              "messages": [
-                {"role": "system", "content": "You are a helpful assistant that creates detailed React issue reports."},
-                {"role": "user", "content": "Generate a detailed React developer issue with title and body in markdown format."}
-              ],
-              "max_tokens": 800
-            }')
-
-          echo "response=$RESPONSE" >> $GITHUB_OUTPUT
-
-      - name: Save Gemini response to file
-        run: echo '${{ steps.generate.outputs.response }}' > response.json
+          curl -s -X POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$GEMINI_API_KEY \
+          -H "Content-Type: application/json" \
+          -d '{
+            "contents": [{
+              "parts": [{
+                "text": "Generate a GitHub issue about a common React problem developers face, with title and markdown-formatted body."
+              }]
+            }]
+          }' > response.json
 
       - name: Extract Title and Body from Gemini Response
         id: parse
         run: |
-          # extract the message content from the response JSON
-          CONTENT=$(jq -r '.choices[0].message.content' response.json)
+          CONTENT=$(jq -r '.candidates[0].content.parts[0].text' response.json)
 
-          # parse title from first markdown heading line starting with "# "
-          TITLE=$(echo "$CONTENT" | grep -m 1 '^# ' | sed 's/^# //')
+          echo "$CONTENT" > full.md
 
-          # parse body: all lines after the first heading
-          BODY=$(echo "$CONTENT" | sed -n '2,$p')
+          TITLE=$(head -n 1 full.md | sed 's/^# //')
+          echo "$TITLE" > title.txt
 
-          echo "title=$TITLE" >> $GITHUB_OUTPUT
-          echo "body<<EOF" >> $GITHUB_OUTPUT
-          echo "$BODY" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          tail -n +2 full.md > issue-body.md
 
       - name: Create GitHub Issue
         uses: peter-evans/create-issue-from-file@v5
         with:
           title: ${{ steps.parse.outputs.title }}
-          content-filepath: 'issue-body.md'
+          content-filepath: issue-body.md
           labels: react, ai-generated
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Write issue body to file
-        run: echo "${{ steps.parse.outputs.body }}" > issue-body.md
+      - name: Debug - Show files created
+        run: |
+          echo "Title:"
+          cat title.txt
+          echo "Body:"
+          cat issue-body.md
