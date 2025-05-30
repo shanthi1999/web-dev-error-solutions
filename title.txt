@@ -1,1 +1,1 @@
-## Issue: Unexpected re-renders due to object comparison in useEffect dependency array
+## Issue: Unexpected Re-renders and Performance Degradation with useState and useEffect
