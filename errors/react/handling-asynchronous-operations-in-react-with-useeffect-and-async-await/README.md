@@ -1,3 +1,5 @@
+# 🐞 Handling Asynchronous Operations in React with `useEffect` and `async/await`
+
 
 This document addresses a common problem in React development: managing asynchronous operations within functional components using `useEffect` and `async/await`.  Incorrectly handling asynchronous calls inside `useEffect` can lead to unexpected behavior, stale closures, and race conditions.
 
