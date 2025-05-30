@@ -1,1 +1,1 @@
-Troubleshooting Unexpected Behavior with `dotenv` in Node.js
+Troubleshooting `next export` Errors in Next.js with Dynamic Routes

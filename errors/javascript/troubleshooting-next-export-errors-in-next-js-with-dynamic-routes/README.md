@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting `next export` Errors in Next.js with Dynamic Routes
+
 
 This document addresses a common problem encountered when using `next export` in Next.js applications with dynamic routes:  failure to generate static HTML files for dynamic pages. This usually manifests as errors during the export process, indicating that Next.js cannot pre-render pages that rely on data fetched at build time.
 
