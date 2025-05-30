@@ -1,1 +1,1 @@
-Handling CORS Errors in a Next.js Application
+Creating a CSS-only Expanding Card with a Subtle Reveal
