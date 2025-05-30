@@ -1,1 +1,1 @@
-## Issue: Unexpected Re-renders due to Object Comparison in `useEffect` Hook
+React Context API - Performance Issues with Large State Objects
