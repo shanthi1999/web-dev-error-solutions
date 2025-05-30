@@ -1,3 +1,5 @@
+# 🐞 Troubleshooting `dotenv` Configuration in a Node.js Application
+
 
 This document addresses a common issue encountered when using the `dotenv` package in Node.js applications:  failure to load environment variables correctly, leading to runtime errors or unexpected behavior.  This often manifests as variables being `undefined` or containing incorrect values within your application.
 
