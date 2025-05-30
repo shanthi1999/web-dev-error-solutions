@@ -27,13 +27,14 @@ jobs:
           -d '{
             "contents": [{
               "parts": [{
-                "text": "Generate a detailed documentation with Markdown about a modern JavaScript topic like React, NextJS, MERN-stack, VanillaJS, ExpressJS, DotEnv, Langchain, OpenAI-API-javascript,  Tailwind CSS, Bootstrap or Node.js. Include:
+                "text": "Generate a detailed documentation with Markdown about a randomly chosen problem developers face in React, NextJS, MERN-stack, VanillaJS, ExpressJS, DotEnv, Langchain, OpenAI-API-javascript,  Tailwind CSS, Bootstrap or Node.js. Include:
                           - A Markdown H1 title
-                          - Description
-                          - Use Case
-                          - Sample Code
+                          - Description of the error
+                          - cause
+                          - full code of fixing step by step
+                          - write external references, links to websites, and external resources inside <a href=LINK></a>
                           - Explanation
-                          - End with a link to https://www.github.com/openrockets"
+                          - End with <a href="https://www.github.com/openrockets">OpenRockets open-source</a>"
               }]
             }]
           }' > response.json
