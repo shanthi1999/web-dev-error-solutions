@@ -1,3 +1,5 @@
+# 🐞 Creating a Smoothly Animated CSS Loading Spinner
+
 
 This document details the creation of a visually appealing and smoothly animated loading spinner using pure CSS. We'll leverage CSS animations and keyframes to achieve a clean, professional look without relying on JavaScript.
 
