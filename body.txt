@@ -1,12 +1,13 @@
 
-This document details a CSS-only technique to create an expanding card with a subtle reveal effect on hover.  This effect is achieved using transitions, transforms, and box-shadow without relying on JavaScript.  It's a great example of leveraging CSS3 capabilities for interactive UI elements.
-
-**Description of the Styling:**
-
-This design creates a simple card that, on hover, expands slightly revealing a more detailed description or additional content. The expansion is accompanied by a subtle shadow increase, enhancing the visual feedback.  The card itself maintains a clean, modern aesthetic.
+This document details the creation of an expanding card effect using only CSS.  No JavaScript is required. The effect involves a card that expands smoothly when hovered over, revealing additional content with a subtle animation.  This utilizes CSS transitions and transforms to achieve a clean and elegant visual.
 
 
-**Full Code:**
+## Description of the Styling
+
+The styling creates a card with a minimal design.  On hover, the card expands horizontally, revealing hidden content.  A subtle shadow effect enhances the visual appeal during the expansion.
+
+
+## Full Code
 
 ```html
 <!DOCTYPE html>
@@ -15,55 +16,43 @@ This design creates a simple card that, on hover, expands slightly revealing a m
 <title>Expanding Card</title>
 <style>
 .card {
-  background-color: #f2f2f2;
-  border-radius: 8px;
+  width: 200px;
+  height: 150px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  width: 300px;
-  cursor: pointer; /* Indicate it's interactive */
+  overflow: hidden; /* Hide the expanding content initially */
+  transition: width 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
 }
 
 .card:hover {
+  width: 400px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
-  transform: scale(1.05); /* Slight expansion */
 }
 
 .card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: auto; /* Allow for height increase on expansion */
+  padding: 10px;
 }
 
-.card-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 10px;
+.hidden-content {
+  display: none; /* Initially hide the extra content */
 }
 
-
-.card-description {
-  font-size: 0.9em;
-  color: #555;
-  text-align: center;
-  margin-top: 15px;
-  opacity: 0; /* Initially hidden */
-  transition: opacity 0.3s ease; /* Smooth opacity transition */
+.card:hover .hidden-content {
+  display: block; /* Show extra content on hover */
 }
-
-.card:hover .card-description {
-    opacity: 1; /* Reveal on hover */
-}
-
 </style>
 </head>
 <body>
 
 <div class="card">
   <div class="card-content">
-    <h2 class="card-title">My Expanding Card</h2>
-    <p class="card-description">This card expands on hover to reveal more information.  This is a demonstration of a simple CSS-only animation technique. Notice the subtle shadow and scale changes for added visual feedback.</p>
+    <h3>Card Title</h3>
+    <p>This is the main content of the card.</p>
+    <div class="hidden-content">
+      <p>This is the extra content revealed on hover.</p>
+      <p>More details here...</p>
+    </div>
   </div>
 </div>
 
@@ -71,17 +60,21 @@ This design creates a simple card that, on hover, expands slightly revealing a m
 </html>
 ```
 
-**Explanation:**
 
-* **`transition: all 0.3s ease;`**: This line applies a smooth transition to all CSS properties that change over 0.3 seconds using an ease timing function.  This creates the smooth animation.
-* **`transform: scale(1.05);`**: This scales the card slightly larger on hover, creating the expansion effect.
-* **`box-shadow`**:  The box-shadow is adjusted on hover to create a more pronounced shadow, further enhancing the visual feedback that the card is interactive.
-* **Opacity Transition for Description**: The `.card-description` initially has `opacity: 0;` making it invisible.  On hover, the `opacity` changes to `1`, smoothly revealing the text.
+## Explanation
 
-**External References:**
+* **`.card`**: This class styles the main card element.  `overflow: hidden;` is crucial for hiding the extra content initially.  The `transition` property ensures smooth animation for width and box-shadow changes.
+* **`.card:hover`**: This selector applies styles when the card is hovered over.  The width increases, and the box-shadow becomes more prominent.
+* **`.card-content`**: This class styles the content within the card.
+* **`.hidden-content`**: This class initially hides the extra content using `display: none;`.  The `card:hover .hidden-content` selector displays this content when the card is hovered.
 
-* [MDN Web Docs on CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
-* [MDN Web Docs on CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
+
+## External References
+
+While this example doesn't directly use a framework like Tailwind CSS, the principles of CSS transitions and hover effects are fundamental across all CSS frameworks.  Understanding these concepts is key to building interactive elements in CSS.  Here are some helpful resources:
+
+* **MDN Web Docs - CSS Transitions:** [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)
+* **MDN Web Docs - CSS Transforms:** [https://developer.mozilla.org/en-US/docs/Web/CSS/transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.
