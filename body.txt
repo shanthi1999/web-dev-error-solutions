@@ -1,10 +1,9 @@
 
-This document details a CSS-only technique to create an expanding card effect, providing a smooth transition when a card is hovered over.  This effect enhances user interaction and provides a visually appealing way to present information. We'll be using pure CSS3 for this, avoiding the need for JavaScript.
+This document details how to create a visually appealing animated loading spinner using only CSS.  No JavaScript is required.  This utilizes CSS animations and keyframes to achieve the effect.  We'll build a simple, circular spinner that rotates smoothly.
 
 **Description of the Styling:**
 
-This technique leverages CSS transitions and transforms to create the expansion effect.  On hover, the card's height and width expand, creating a visual "reveal" of further content.  We'll also use a subtle box-shadow to add depth and improve the visual appeal.  The primary styling is achieved with CSS transitions applied to `transform` and `box-shadow` properties.
-
+This spinner utilizes a single element (a pseudo-element is also used for visual effect), styled with CSS to create a rotating effect.  The animation uses keyframes to define the rotation over a specified duration. We'll use borders to create the visual effect of a spinner.  The color can be easily customized.
 
 **Full Code:**
 
@@ -12,63 +11,46 @@ This technique leverages CSS transitions and transforms to create the expansion 
 <!DOCTYPE html>
 <html>
 <head>
-<title>Expanding Card</title>
+<title>CSS Loading Spinner</title>
 <style>
-.card {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Hide content that overflows during expansion */
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
-  width: 200px;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3; /* Light grey border */
+  border-top: 5px solid #3498db; /* Blue color for the spinning effect */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-.card:hover {
-  transform: scale(1.1); /* Expand on hover */
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-
-.card-content {
-  text-align: center;
-  padding: 10px;
-}
-
-.card-title {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
 </style>
 </head>
 <body>
 
-<div class="card">
-  <div class="card-content">
-    <h3 class="card-title">Expanding Card</h3>
-    <p>This is some sample content within the expanding card.</p>
-  </div>
-</div>
+<h1>Loading...</h1>
+<div class="spinner"></div>
 
 </body>
 </html>
 ```
 
-
 **Explanation:**
 
-* **`.card`:** This class styles the base card.  `overflow: hidden;` is crucial to prevent content from spilling outside the card during expansion. `transition` property defines the smooth animation for `transform` and `box-shadow`.
-* **`.card:hover`:** This selector applies styles when the card is hovered over. `transform: scale(1.1);` increases the size by 10%, creating the expansion effect.  The `box-shadow` is increased to enhance the visual feedback.
-* **`.card-content` and `.card-title`:** These classes style the content within the card for better presentation.
+* **`.spinner` class:** This class styles the main div element. `width` and `height` set the size.  The `border` property creates the circular shape.  `border-top` is set to a different color to create the spinning effect.  `border-radius: 50%;` makes it a perfect circle.  `animation: spin 1s linear infinite;` applies the animation.
+
+* **`@keyframes spin`:** This defines the animation.  It smoothly rotates the element 360 degrees over 1 second (`1s`) repeatedly (`infinite`).  `linear` ensures a consistent speed.
+
 
 **External References:**
 
-* [MDN Web Docs on CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
-* [MDN Web Docs on CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
+* [MDN Web Docs on CSS Animations](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations)
+* [W3Schools on Keyframes](https://www.w3schools.com/css/css3_animations.asp)
+
+
+This simple example demonstrates the power of CSS for creating dynamic visual effects without needing JavaScript. You can adjust the `width`, `height`, `border-width`, colors, and animation duration to customize the spinner to your needs.  For more advanced spinners, consider using multiple elements or more complex keyframe animations.
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.

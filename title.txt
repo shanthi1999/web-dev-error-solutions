@@ -1,1 +1,1 @@
-Creating a CSS-Only Expanding Card with Smooth Transitions
+Creating a Pure CSS Animated Loading Spinner
