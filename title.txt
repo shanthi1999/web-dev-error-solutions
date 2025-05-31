@@ -1,1 +1,1 @@
-Creating a CSS-only Expanding Card with Subtle Animations
+Creating a CSS-Only Expanding Card with a Subtle Reveal

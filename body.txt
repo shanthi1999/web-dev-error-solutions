@@ -1,9 +1,10 @@
 
-This document details a CSS-only solution for creating an expanding card with subtle animation effects, providing a visually appealing user experience without relying on JavaScript. We'll achieve this using pure CSS3 transitions and transforms.
+This document details how to create an expanding card effect using only CSS.  This effect provides a visually appealing and user-friendly way to reveal more information on hover or click. We'll leverage CSS transitions and transforms for a smooth animation.
+
 
 **Description of the Styling:**
 
-This technique creates a card that expands vertically when hovered over, revealing additional content. The expansion is smooth due to CSS transitions, and a subtle shadow effect enhances the visual appeal.  The styling emphasizes clean lines and a modern aesthetic.
+This technique uses a single `div` element to represent the card.  The card initially displays a concise summary. On hover, the card expands vertically to reveal hidden content.  A subtle shadow effect enhances the visual appeal.  No JavaScript is required.
 
 **Full Code:**
 
@@ -14,17 +15,16 @@ This technique creates a card that expands vertically when hovered over, reveali
 <title>Expanding Card</title>
 <style>
 .card {
-  background-color: #f2f2f2;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Hide content that overflows during transition */
-  transition: max-height 0.3s ease-in-out; /* Smooth transition for max-height */
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Hide content that extends beyond the card */
+  transition: max-height 0.3s ease-in-out; /* Smooth transition for expansion */
   max-height: 100px; /* Initial height */
 }
 
 .card:hover {
   max-height: 300px; /* Expanded height on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
 }
 
 .card-content {
@@ -33,7 +33,7 @@ This technique creates a card that expands vertically when hovered over, reveali
 
 .card-title {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .card-text {
@@ -46,8 +46,10 @@ This technique creates a card that expands vertically when hovered over, reveali
 
 <div class="card">
   <div class="card-content">
-    <h2 class="card-title">Expanding Card</h2>
-    <p class="card-text">This is a CSS-only expanding card.  Hover over the card to see it expand and reveal more content.  This uses only CSS transitions and transforms for a smooth animation.</p>
+    <h3 class="card-title">Card Title</h3>
+    <p class="card-text">This is a short summary of the card content.</p>
+    <p class="card-text" style="display: none;">This is the extra content that will be revealed on hover.  This text is initially hidden using the `display: none;` style.
+    </p>
   </div>
 </div>
 
@@ -55,20 +57,20 @@ This technique creates a card that expands vertically when hovered over, reveali
 </html>
 ```
 
+
 **Explanation:**
 
-* **`max-height`:**  This property controls the maximum height of the card.  The initial value is set to a smaller height, and on hover, it increases, revealing the hidden content.
-* **`transition`:** This property smoothly animates the change in `max-height` over 0.3 seconds using an ease-in-out timing function.
-* **`box-shadow`:** The `box-shadow` property creates a subtle shadow, enhancing the card's three-dimensional appearance. The shadow is increased on hover for added emphasis.
-* **`overflow: hidden`:** This prevents the content from overflowing the card before the transition is complete.
-* **`.card-content`, `.card-title`, `.card-text`:** These classes are used for structural styling and semantic clarity.
+* **`max-height`:**  This property initially restricts the card's height. On hover,  `max-height` is increased, revealing the hidden content.
+* **`transition`:** This property creates a smooth animation for the `max-height` change, preventing a jarring jump.  `ease-in-out` provides a natural easing effect.
+* **`overflow: hidden;`:** This prevents the initially hidden content from overflowing and being visible before the card expands.
+* **`display: none;`**: This is used to initially hide the extra content until the card expands.  This could be replaced with a more advanced method of controlling the content, e.g. with JavaScript.
 
 
 **External References:**
 
-* [CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) - MDN documentation on CSS transitions.
-* [CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) - MDN documentation on CSS transforms (although not directly used here, they are relevant for more advanced card animations).
-* [Box Shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow) - MDN documentation on the box-shadow property
+* [CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
+* [CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
+* [Understanding Box-Shadow](https://css-tricks.com/almanac/properties/b/box-shadow/)
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.
