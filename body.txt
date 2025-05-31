@@ -1,9 +1,9 @@
 
-This document describes how to create a visually appealing loading spinner using only CSS. We'll leverage CSS3 animations and transforms to achieve a smooth, rotating effect without relying on JavaScript or image assets.
+This document details how to create an expanding card effect using only CSS.  This technique leverages CSS transitions and transforms to achieve a smooth, visually appealing animation without relying on JavaScript.  The card expands vertically when hovered over, revealing hidden content.
 
 **Description of the Styling:**
 
-This spinner consists of 8 evenly spaced circular elements arranged in a ring.  Each element will rotate independently around its own center, creating a dynamic loading animation.  We’ll use the `@keyframes` rule to define the animation and CSS transforms to control the rotation and position.  The styling will be concise and easily adaptable to different color schemes and sizes.
+The styling uses a simple card structure with a main container and an inner content area.  The `height` of the inner content is initially set to zero, causing the content to be hidden.  On hover, the `height` is dynamically adjusted to reveal the hidden content, and a transform is applied for a subtle lift effect.  We'll also use a transition property to make the animation smooth.
 
 
 **Full Code:**
@@ -12,51 +12,40 @@ This spinner consists of 8 evenly spaced circular elements arranged in a ring.  
 <!DOCTYPE html>
 <html>
 <head>
-<title>CSS Loading Spinner</title>
+<title>Expanding Card</title>
 <style>
-.spinner {
-  width: 80px;
-  height: 80px;
-  position: relative;
-  margin: 50px auto;
+.card {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Hide content that extends beyond the card */
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions for box-shadow and transform */
 }
 
-.spinner div {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #3498db; /* You can change the color here */
-  border-radius: 50%;
-  animation: rotate 1s linear infinite;
+.card:hover {
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  transform: translateY(-3px); /* subtle lift effect */
 }
 
-.spinner div:nth-child(1) { top: 0; left: 35px; animation-delay: 0.1s; }
-.spinner div:nth-child(2) { top: 15px; left: 60px; animation-delay: 0.2s; }
-.spinner div:nth-child(3) { top: 40px; left: 60px; animation-delay: 0.3s; }
-.spinner div:nth-child(4) { top: 60px; left: 45px; animation-delay: 0.4s; }
-.spinner div:nth-child(5) { top: 60px; left: 20px; animation-delay: 0.5s; }
-.spinner div:nth-child(6) { top: 40px; left: 0px; animation-delay: 0.6s; }
-.spinner div:nth-child(7) { top: 15px; left: 0px; animation-delay: 0.7s; }
-.spinner div:nth-child(8) { top: 15px; left: 20px; animation-delay: 0.8s; }
+.card-content {
+  padding: 20px;
+  height: 0; /* Initially hidden */
+  overflow: hidden; /* Hide content that extends beyond the card */
+  transition: height 0.5s ease; /* Smooth height transition */
+}
 
-@keyframes rotate {
-  100% {
-    transform: rotate(360deg);
-  }
+.card:hover .card-content {
+  height: auto; /* Reveal content on hover */
 }
 </style>
 </head>
 <body>
 
-<div class="spinner">
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
+<div class="card">
+  <div class="card-content">
+    <h2>This is the title of the card</h2>
+    <p>This is some sample text within the expanding card.  You can add as much content as you like here.  The height of the card will adjust dynamically to accommodate the content.</p>
+  </div>
 </div>
 
 </body>
@@ -65,16 +54,19 @@ This spinner consists of 8 evenly spaced circular elements arranged in a ring.  
 
 **Explanation:**
 
-* **`spinner` class:** This sets up the container for our spinner, defining its size and centering it on the page.
-* **`spinner div`:** This styles each individual circle.  `position: absolute` allows precise placement within the container.
-* **`:nth-child` selectors:** These are used to position each circle evenly around the center. The `animation-delay` property staggers the animation for each circle, creating the rotating effect.
-* **`@keyframes rotate`:** This defines the animation, rotating each circle 360 degrees over one second (`1s`).  `linear` ensures constant speed.  `infinite` makes the animation loop continuously.
+* **`.card`:**  This class styles the main card container.  `overflow: hidden;` is crucial to prevent the content from overflowing before expansion.
+* **`.card-content`:** This class styles the inner content area.  `height: 0;` initially hides the content. `overflow: hidden;` prevents the content from overflowing the card before expansion.
+* **`:hover` pseudo-class:** This targets the card when the mouse hovers over it.
+    * The `height: auto;` removes the height restriction, allowing the content to expand.
+    * The `box-shadow` and `transform` properties create the visual effects.
+* **`transition` property:** This property ensures smooth animations for the height, box-shadow, and transform properties.  The `ease` timing function provides a natural-feeling animation.
 
 
 **External References:**
 
-* [MDN Web Docs on CSS Animations](https://developer.mozilla.org/en-US/docs/Web/CSS/animation)
-* [CSS-Tricks on Loading Spinners](https://css-tricks.com/examples/Spinner/) (for more advanced spinner examples)
+* [CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) - MDN documentation on CSS transitions.
+* [CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) - MDN documentation on CSS transforms.
+* [Understanding CSS Pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) - MDN documentation on CSS pseudo-classes.
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.
