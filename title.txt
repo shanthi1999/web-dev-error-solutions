@@ -1,1 +1,1 @@
-Creating a Pure CSS Circular Progress Bar
+Creating a Smooth, Circular Progress Bar with CSS
