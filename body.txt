@@ -1,9 +1,10 @@
 
-This document details how to create a circular progress bar using only CSS.  No JavaScript is required! This utilizes the `clip-path` property for a clean and efficient solution.
+This document details a CSS-only technique to create an expanding card effect, providing a smooth transition when a card is hovered over.  This effect enhances user interaction and provides a visually appealing way to present information. We'll be using pure CSS3 for this, avoiding the need for JavaScript.
 
 **Description of the Styling:**
 
-This technique leverages the `clip-path` property in CSS to create a circular shape. We use a background circle as the base, and then a second circle on top that's clipped to reveal only a portion, representing the progress percentage.  The rotation of the clip is dynamically controlled by the percentage value.
+This technique leverages CSS transitions and transforms to create the expansion effect.  On hover, the card's height and width expand, creating a visual "reveal" of further content.  We'll also use a subtle box-shadow to add depth and improve the visual appeal.  The primary styling is achieved with CSS transitions applied to `transform` and `box-shadow` properties.
+
 
 **Full Code:**
 
@@ -11,69 +12,63 @@ This technique leverages the `clip-path` property in CSS to create a circular sh
 <!DOCTYPE html>
 <html>
 <head>
-<title>CSS Circular Progress Bar</title>
+<title>Expanding Card</title>
 <style>
-.progress-ring {
-  width: 150px;
+.card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Hide content that overflows during expansion */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
+  width: 200px;
   height: 150px;
-  border-radius: 50%;
-  background-color: #f0f0f0; /* Light gray background */
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.progress-ring::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: #4CAF50; /* Green progress color */
-  clip-path: circle(50% at 50% 50%); /* Initial clip - full circle */
-  animation: progress-animation 2s linear forwards; /* Animation */
+.card:hover {
+  transform: scale(1.1); /* Expand on hover */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
 }
 
-@keyframes progress-animation {
-  to {
-    clip-path: circle(50% at 50% calc(90deg + 270deg * var(--progress,0)));
-    /* Rotate the clip path based on progress percentage */
-  }
+.card-content {
+  text-align: center;
+  padding: 10px;
 }
 
+.card-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
 </style>
 </head>
 <body>
 
-<h1>CSS Circular Progress Bar</h1>
-<div class="progress-ring" style="--progress: 0.75;"></div>  <!-- 75% progress -->
-<br>
-<div class="progress-ring" style="--progress: 0.2;"></div> <!-- 20% progress -->
-<br>
-<div class="progress-ring" style="--progress: 0.5;"></div> <!-- 50% progress -->
-
+<div class="card">
+  <div class="card-content">
+    <h3 class="card-title">Expanding Card</h3>
+    <p>This is some sample content within the expanding card.</p>
+  </div>
+</div>
 
 </body>
 </html>
 ```
 
+
 **Explanation:**
 
-* **`progress-ring`:** This is the main container, setting the size and base style of the circle.
-* **`progress-ring::before`:** This pseudo-element creates the progress indicator.  `translate(-50%, -50%)` centers it within the parent.
-* **`clip-path: circle(50% at 50% 50%);`:** This initially creates a full circle clip.  The `at` keyword specifies the center point.
-* **`clip-path: circle(50% at 50% calc(90deg + 270deg * var(--progress,0)));`:** This is the key line within the animation.  It dynamically adjusts the clip-path based on the `--progress` custom property.  `var(--progress,0)` defaults to 0 if the variable is not set. The formula `90deg + 270deg * var(--progress)` ensures that the animation starts from the top and rotates clockwise.
-* **`--progress` Custom Property:** This CSS custom property allows you to easily control the progress percentage by setting it in the HTML using inline styles.   A value of 0 represents 0% progress, and a value of 1 represents 100% progress.
-* **`animation: progress-animation 2s linear forwards;`:** This applies the animation named `progress-animation`, setting its duration to 2 seconds, using linear timing, and keeping the final state after the animation.
-* **`@keyframes progress-animation`:** This defines the animation itself, smoothly changing the `clip-path` from a full circle to a partial circle representing the progress.
-
+* **`.card`:** This class styles the base card.  `overflow: hidden;` is crucial to prevent content from spilling outside the card during expansion. `transition` property defines the smooth animation for `transform` and `box-shadow`.
+* **`.card:hover`:** This selector applies styles when the card is hovered over. `transform: scale(1.1);` increases the size by 10%, creating the expansion effect.  The `box-shadow` is increased to enhance the visual feedback.
+* **`.card-content` and `.card-title`:** These classes style the content within the card for better presentation.
 
 **External References:**
 
-* [MDN Web Docs - clip-path](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
-* [CSS Variables (Custom Properties)](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+* [MDN Web Docs on CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
+* [MDN Web Docs on CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.
