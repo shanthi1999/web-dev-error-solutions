@@ -1,69 +1,72 @@
 
-This document details how to create a circular progress bar using only CSS.  This avoids the need for JavaScript, making it lightweight and efficient.  The technique relies on cleverly using the `clip-path` property and an `::before` pseudo-element.
+This document details how to create an expanding card effect using only CSS.  This technique leverages CSS transitions and transforms to achieve a visually appealing and interactive experience without needing JavaScript.  We'll be using pure CSS3 for this example.
 
+**Description of the Styling:**
 
-## Description of the Styling
+This styling creates a card that expands vertically when hovered over.  The expansion is smooth due to the CSS transition property. The card's content smoothly slides down revealing more information.  The effect is subtle yet impactful, enhancing user engagement.
 
-This styling creates a circular progress bar that fills dynamically based on a percentage value.  The progress bar itself is a simple circle, with a portion of it "clipped" away to reveal a background color, creating the effect of a progress indicator.  The percentage is controlled by a custom property (`--progress`) which can be easily adjusted.
-
-## Full Code
+**Full Code:**
 
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-<title>CSS Circular Progress Bar</title>
+<title>Expanding Card</title>
 <style>
-.progress-ring {
-  --progress: 75; /* Adjust this value to change the progress */
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-color: #eee;
-  position: relative;
+.card {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  overflow: hidden; /* Hide content that overflows initially */
+  transition: height 0.3s ease-in-out; /* Smooth transition for height change */
 }
 
-.progress-ring::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: #4CAF50; /* Progress bar color */
-  clip-path: circle(50% at 50% 50%);
-  transform: rotate(calc(var(--progress) * 3.6deg)); /* 360deg / 100 */
-  transform-origin: 50% 50%;
+.card-content {
+  height: 100px; /* Initial height of the card content */
+  transition: height 0.3s ease-in-out; /* Smooth transition for height change */
+  overflow: hidden; /* Hide content that overflows initially */
+}
+
+.card:hover .card-content {
+  height: auto; /* Expand to full content height on hover */
+}
+
+.card h2 {
+  margin-top: 0;
 }
 </style>
 </head>
 <body>
 
-<h1>CSS Circular Progress Bar</h1>
-<div class="progress-ring"></div>
+<div class="card">
+  <h2>Card Title</h2>
+  <div class="card-content">
+    <p>This is some example text for the expanding card.  You can add as much content as you like and it will smoothly expand to accommodate it on hover.</p>
+    <p>More example text to demonstrate the expanding effect.</p>
+  </div>
+</div>
 
 </body>
 </html>
 ```
 
-## Explanation
+**Explanation:**
 
-* **`--progress` Custom Property:** This variable controls the percentage of the circle that is filled.  It's set to 75% in this example.  Change this value to adjust the progress.
+* **`.card`:** This class styles the overall card container.  `overflow: hidden;` is crucial; it initially hides any content exceeding the initial height.  The `transition` property defines the smooth animation for the height change.
 
-* **`clip-path: circle(50% at 50% 50%);`:** This creates a circular clipping path, effectively masking the background color of the `::before` pseudo-element.  The `50% at 50% 50%` part centers the circle.
+* **`.card-content`:** This class styles the inner content of the card. The `height: 100px;` sets the initial, collapsed height.  The `transition` is mirrored from the `.card` class for consistent animation.  `overflow: hidden;` prevents content from overflowing before expansion.
 
-* **`transform: rotate(calc(var(--progress) * 3.6deg));`:** This is the key to the animation.  It rotates the filled portion of the circle.  `3.6deg` is calculated as `360deg / 100` (percentage steps).  This rotates the circle proportionally to the `--progress` value.
+* **`.card:hover .card-content`:** This is the key part.  The `:hover` pseudo-class targets the card when the mouse is over it.  Setting `height: auto;` removes the height constraint, allowing the content to expand to its natural size.
 
-* **`transform-origin: 50% 50%;`:** This sets the rotation origin to the center of the circle, ensuring smooth rotation.
+* **`transition: height 0.3s ease-in-out;`:** This property smoothly animates the changes in height over 0.3 seconds, using an ease-in-out timing function for a natural feel.
 
 
-## External References
+**External References:**
 
-While this example is self-contained, understanding `clip-path` and `transform` properties might be helpful.  Here's a link to the MDN documentation:
-
-* [MDN Web Docs - clip-path](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
-* [MDN Web Docs - transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
+* [CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) - MDN documentation on CSS transitions.
+* [CSS :hover pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) - MDN documentation on the `:hover` pseudo-class.
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.
