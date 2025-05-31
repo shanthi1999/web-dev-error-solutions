@@ -1,9 +1,9 @@
 
-This document describes how to create a visually appealing circular progress bar using only CSS.  No JavaScript is required! This technique leverages the `clip-path` property for precise shape manipulation and CSS variables for easy customization.
+This document details a CSS-only technique to create an expanding card with a subtle reveal effect on hover.  This effect is achieved using transitions, transforms, and box-shadow without relying on JavaScript.  It's a great example of leveraging CSS3 capabilities for interactive UI elements.
 
 **Description of the Styling:**
 
-This method creates a circular progress bar by using a circle as the base and then using the `clip-path` property to "clip" a portion of the circle, revealing only the progress percentage.  The progress is controlled by a CSS custom property (variable).  We use a subtle gradient for added visual interest.
+This design creates a simple card that, on hover, expands slightly revealing a more detailed description or additional content. The expansion is accompanied by a subtle shadow increase, enhancing the visual feedback.  The card itself maintains a clean, modern aesthetic.
 
 
 **Full Code:**
@@ -12,55 +12,60 @@ This method creates a circular progress bar by using a circle as the base and th
 <!DOCTYPE html>
 <html>
 <head>
-<title>CSS Circular Progress Bar</title>
+<title>Expanding Card</title>
 <style>
-  .circular-progress {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: conic-gradient(
-      #007bff 0%,
-      #007bff var(--progress, 0%),
-      #e0e0e0 var(--progress, 0%),
-      #e0e0e0 100%
-    );
-  }
+.card {
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  width: 300px;
+  cursor: pointer; /* Indicate it's interactive */
+}
 
-  .circular-progress::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    height: 80%;
-    border-radius: 50%;
-    background-color: white;
-    z-index: 1; /* Ensure it's on top of the gradient */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.card:hover {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+  transform: scale(1.05); /* Slight expansion */
+}
 
-  .circular-progress span {
-    font-size: 1em;
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto; /* Allow for height increase on expansion */
+}
+
+.card-title {
+    font-size: 1.2em;
     font-weight: bold;
-  }
+    margin-bottom: 10px;
+}
+
+
+.card-description {
+  font-size: 0.9em;
+  color: #555;
+  text-align: center;
+  margin-top: 15px;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth opacity transition */
+}
+
+.card:hover .card-description {
+    opacity: 1; /* Reveal on hover */
+}
 
 </style>
 </head>
 <body>
 
-<h1>My Progress</h1>
-
-<div class="circular-progress" style="--progress: 75%;">
-  <span>75%</span>
+<div class="card">
+  <div class="card-content">
+    <h2 class="card-title">My Expanding Card</h2>
+    <p class="card-description">This card expands on hover to reveal more information.  This is a demonstration of a simple CSS-only animation technique. Notice the subtle shadow and scale changes for added visual feedback.</p>
+  </div>
 </div>
-
-<div class="circular-progress" style="--progress: 20%;">
-  <span>20%</span>
-</div>
-
 
 </body>
 </html>
@@ -68,17 +73,15 @@ This method creates a circular progress bar by using a circle as the base and th
 
 **Explanation:**
 
-* **`conic-gradient`:** This creates a circular gradient.  The first color (`#007bff` - a blue in this case) represents the filled portion of the progress bar, and the second color (`#e0e0e0` - a light gray) represents the empty portion.  `var(--progress)` dynamically controls the boundary between these colors.
-* **`::before` pseudo-element:** This creates a white circle in the center of the progress bar to improve readability. It's positioned absolutely and centered using `transform: translate(-50%, -50%);`.
-* **`--progress` CSS Variable:** This variable allows you to easily control the progress percentage.  The value should be between 0 and 100.  It's used within the `conic-gradient`.
-* **Multiple Progress Bars:** The code demonstrates how to create multiple progress bars with different progress percentages simply by adjusting the `--progress` variable in the `style` attribute of each `<div>`.
-
+* **`transition: all 0.3s ease;`**: This line applies a smooth transition to all CSS properties that change over 0.3 seconds using an ease timing function.  This creates the smooth animation.
+* **`transform: scale(1.05);`**: This scales the card slightly larger on hover, creating the expansion effect.
+* **`box-shadow`**:  The box-shadow is adjusted on hover to create a more pronounced shadow, further enhancing the visual feedback that the card is interactive.
+* **Opacity Transition for Description**: The `.card-description` initially has `opacity: 0;` making it invisible.  On hover, the `opacity` changes to `1`, smoothly revealing the text.
 
 **External References:**
 
-* [MDN Web Docs - `conic-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/conic-gradient)
-* [MDN Web Docs - `clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)  (While not directly used here, understanding `clip-path` is helpful for related techniques)
-* [CSS Variables (Custom Properties)](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+* [MDN Web Docs on CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
+* [MDN Web Docs on CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.
