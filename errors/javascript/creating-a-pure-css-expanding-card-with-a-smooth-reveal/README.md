@@ -1,3 +1,5 @@
+# 🐞 Creating a Pure CSS Expanding Card with a Smooth Reveal
+
 
 This document details how to create an expanding card using only CSS.  The effect involves a card that smoothly expands to reveal more content when clicked, without relying on JavaScript. This is achieved using CSS transitions and transformations.  We'll be using plain CSS3 for this example, but the concept could be adapted to frameworks like Tailwind CSS.
 
