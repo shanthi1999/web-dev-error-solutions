@@ -1,3 +1,5 @@
+# 🐞 Creating a Smooth, Animated Scroll Reveal with CSS
+
 
 This document details how to create a smooth, animated scroll reveal effect using pure CSS.  This effect reveals elements as the user scrolls down the page, adding a touch of dynamism and visual interest. We'll be utilizing CSS transitions and the `scroll-snap-type` property (where supported) for a polished look.
 

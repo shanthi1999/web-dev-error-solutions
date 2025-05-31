@@ -1,1 +1,1 @@
-Creating a Smooth, Circular Progress Bar with CSS
+Creating a Smooth, Animated Scroll Reveal with CSS
