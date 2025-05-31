@@ -1,3 +1,5 @@
+# 🐞 Creating a CSS-only Expanding Card with a Subtle Reveal Animation
+
 
 This document details the creation of an expanding card using only CSS.  The animation smoothly reveals the card content upon hover, providing a subtle and engaging user experience.  This example uses pure CSS3, avoiding the need for JavaScript libraries or frameworks.
 
