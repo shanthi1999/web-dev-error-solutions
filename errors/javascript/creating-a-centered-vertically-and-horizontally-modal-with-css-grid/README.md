@@ -1,3 +1,5 @@
+# 🐞 Creating a Centered, Vertically and Horizontally, Modal with CSS Grid
+
 
 This document describes how to create a centered modal using CSS Grid.  This method offers a clean and concise approach compared to other techniques involving flexbox or absolute positioning.  It's particularly useful for quickly styling responsive modals without complex calculations.
 

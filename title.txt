@@ -1,1 +1,1 @@
-Creating a CSS-only Expanding Card with a Subtle Reveal Effect
+Creating a Centered, Vertically and Horizontally, Modal with CSS Grid
