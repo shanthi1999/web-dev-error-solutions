@@ -1,1 +1,1 @@
-Creating a Centered, Vertically and Horizontally, Modal with CSS Grid
+Creating a CSS-only Circular Progress Bar

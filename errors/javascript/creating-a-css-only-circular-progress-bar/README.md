@@ -1,11 +1,11 @@
-# 🐞 Creating a CSS-Only Circular Progress Bar
+# 🐞 Creating a CSS-only Circular Progress Bar
 
 
-This document details how to create a circular progress bar using only CSS.  No JavaScript is required! This utilizes the `clip-path` property for a clean and efficient solution.
+This document details the creation of a circular progress bar using only CSS.  We avoid JavaScript for a lightweight and performant solution, suitable for simple progress indicators.  This technique leverages CSS's `clip-path` property and animations to achieve the effect.
 
 **Description of the Styling:**
 
-This technique leverages the `clip-path` property in CSS to create a circular shape. We use a background circle as the base, and then a second circle on top that's clipped to reveal only a portion, representing the progress percentage.  The rotation of the clip is dynamically controlled by the percentage value.
+This method uses a circle as the base, masking a portion of it to create the progress effect.  The visible portion represents the percentage complete.  We use a combination of `clip-path`, `animation`, and `transform` to rotate the visible segment of the circle. The percentage is controlled via a custom CSS property (`--progress`).
 
 **Full Code:**
 
@@ -16,10 +16,11 @@ This technique leverages the `clip-path` property in CSS to create a circular sh
 <title>CSS Circular Progress Bar</title>
 <style>
 .progress-ring {
+  --progress: 75; /* Adjust this value to change the progress */
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: #f0f0f0; /* Light gray background */
+  background-color: #f0f0f0; /* Background color of the ring */
   position: relative;
 }
 
@@ -32,50 +33,46 @@ This technique leverages the `clip-path` property in CSS to create a circular sh
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #4CAF50; /* Green progress color */
-  clip-path: circle(50% at 50% 50%); /* Initial clip - full circle */
-  animation: progress-animation 2s linear forwards; /* Animation */
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); /*creates the semicircle*/
+  background-color: #4CAF50; /* Progress color */
+  animation: progress-animation var(--progress-duration) linear;
 }
 
 @keyframes progress-animation {
   to {
-    clip-path: circle(50% at 50% calc(90deg + 270deg * var(--progress,0)));
-    /* Rotate the clip path based on progress percentage */
+    transform: translate(-50%, -50%) rotate(calc(var(--progress) * 3.6deg)); /* 360deg / 100% */
   }
 }
-
+/* Adjust animation duration with CSS variable. */
+.progress-ring {
+    --progress-duration: 2s;
+}
 
 </style>
 </head>
 <body>
 
 <h1>CSS Circular Progress Bar</h1>
-<div class="progress-ring" style="--progress: 0.75;"></div>  <!-- 75% progress -->
-<br>
-<div class="progress-ring" style="--progress: 0.2;"></div> <!-- 20% progress -->
-<br>
-<div class="progress-ring" style="--progress: 0.5;"></div> <!-- 50% progress -->
-
+<div class="progress-ring"></div>
 
 </body>
 </html>
 ```
 
+
 **Explanation:**
 
-* **`progress-ring`:** This is the main container, setting the size and base style of the circle.
-* **`progress-ring::before`:** This pseudo-element creates the progress indicator.  `translate(-50%, -50%)` centers it within the parent.
-* **`clip-path: circle(50% at 50% 50%);`:** This initially creates a full circle clip.  The `at` keyword specifies the center point.
-* **`clip-path: circle(50% at 50% calc(90deg + 270deg * var(--progress,0)));`:** This is the key line within the animation.  It dynamically adjusts the clip-path based on the `--progress` custom property.  `var(--progress,0)` defaults to 0 if the variable is not set. The formula `90deg + 270deg * var(--progress)` ensures that the animation starts from the top and rotates clockwise.
-* **`--progress` Custom Property:** This CSS custom property allows you to easily control the progress percentage by setting it in the HTML using inline styles.   A value of 0 represents 0% progress, and a value of 1 represents 100% progress.
-* **`animation: progress-animation 2s linear forwards;`:** This applies the animation named `progress-animation`, setting its duration to 2 seconds, using linear timing, and keeping the final state after the animation.
-* **`@keyframes progress-animation`:** This defines the animation itself, smoothly changing the `clip-path` from a full circle to a partial circle representing the progress.
+* **`--progress`:** This custom property sets the percentage of the progress (0-100).
+* **`clip-path: polygon(...)`:** This creates a semicircle.  We could also use other shapes if needed.
+* **`animation: progress-animation ...`:** This applies the animation to the progress bar.
+* **`@keyframes progress-animation`:** This defines the animation, rotating the semicircle based on the `--progress` value.  The calculation `calc(var(--progress) * 3.6deg)` converts the percentage to degrees (360 degrees in a full circle).
+* **`--progress-duration`:** Allows controlling the speed of the animation.
 
 
 **External References:**
 
-* [MDN Web Docs - clip-path](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
-* [CSS Variables (Custom Properties)](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+* [MDN Web Docs on `clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
+* [CSS-Tricks on Animations](https://css-tricks.com/snippets/css/keyframe-animation-syntax/)
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.
