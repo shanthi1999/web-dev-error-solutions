@@ -1,3 +1,5 @@
+# 🐞 Creating a Pure CSS Loading Spinner with Keyframes
+
 
 This document describes how to create a visually appealing loading spinner using only CSS. We'll leverage CSS3 animations and transforms to achieve a smooth, rotating effect without relying on JavaScript or image assets.
 

@@ -1,1 +1,1 @@
-Creating a CSS-only Circular Progress Bar
+Creating a Pure CSS Loading Spinner with Keyframes
