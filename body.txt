@@ -1,9 +1,9 @@
 
-This document details the creation of an expanding card using only CSS. No JavaScript is required. The effect involves a card that smoothly expands to reveal more content when clicked.  This technique leverages CSS transitions and transforms to achieve a polished user experience.
+This document details how to create a visually appealing circular progress bar using only CSS.  No JavaScript is required! This technique leverages CSS gradients and transforms to achieve a smooth, animated effect.
 
 **Description of the Styling:**
 
-This example uses pure CSS to create a card that expands vertically when clicked.  The expansion reveals hidden content initially collapsed using `max-height: 0;` and the `overflow: hidden;`. A smooth transition is achieved using the `transition` property.  We'll also use some basic styling for aesthetics.
+This circular progress bar uses a combination of techniques to create the visual effect.  A `radial-gradient` creates the circular base, while a `linear-gradient` masked with a circle is used to represent the progress.  CSS animations smoothly transition the progress.  This method is efficient and avoids the performance overhead of JavaScript solutions.
 
 **Full Code:**
 
@@ -11,63 +11,74 @@ This example uses pure CSS to create a card that expands vertically when clicked
 <!DOCTYPE html>
 <html>
 <head>
-<title>Expanding Card</title>
+<title>CSS Circular Progress Bar</title>
 <style>
-.card {
-  background-color: #f2f2f2;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden; /* Hide content initially */
-  transition: max-height 0.5s ease-in-out; /* Add smooth transition */
-  max-height: 100px; /* Initial collapsed height */
-  cursor: pointer; /* Indicate clickability */
+.progress-ring {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #e5e5e5, #e5e5e5 90%, transparent 100%);
+  position: relative;
 }
 
-.card:hover {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+.progress-ring::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(to right, #4CAF50, #4CAF50) no-repeat;
+  background-size: 100% 100%;
+  clip-path: circle(50% at center);
+  animation: progress 3s linear forwards;
 }
 
-.card.expanded {
-  max-height: 300px; /* Expanded height */
+@keyframes progress {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg); /* Adjust 360deg for progress percentage */
+    background-size: calc(100% * var(--progress)) 100%; /* Adjust var(--progress) accordingly */
+  }
 }
 
-.card-content {
-  padding: 10px;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 
-.card-title {
-  font-weight: bold;
-  margin-bottom: 5px;
+/* Example usage with progress percentage (0-100%) */
+.container .progress-ring {
+  --progress: 0.75; /* 75% progress */
 }
 
 </style>
 </head>
 <body>
-
-<div class="card" onclick="this.classList.toggle('expanded')">
-  <div class="card-content">
-    <h3 class="card-title">Click to Expand</h3>
-    <p>This is some hidden content that will be revealed when the card is expanded.  You can add as much content as you like here.</p>
-    <p>More content can be added here to demonstrate the expanding functionality.</p>
-  </div>
+<div class="container">
+  <div class="progress-ring"></div>
 </div>
-
 </body>
 </html>
 ```
 
 **Explanation:**
 
-* **`max-height: 100px;`:** This limits the initial height of the card, hiding any content beyond the first 100px.
-* **`overflow: hidden;`:** This prevents the hidden content from overflowing and becoming visible.
-* **`transition: max-height 0.5s ease-in-out;`:** This is crucial for the smooth animation. It specifies that the `max-height` property should transition over 0.5 seconds using an ease-in-out timing function.
-* **`.card.expanded { max-height: 300px; }`:** This class is added to the card when it's clicked (via `classList.toggle('expanded')`). This increases the `max-height`, revealing the hidden content.
-* **`onclick="this.classList.toggle('expanded')"`:** This inline JavaScript toggles the `expanded` class on the card element when clicked, triggering the height change.  This could be replaced with JavaScript event listeners for a cleaner separation of concerns if preferred.
+* **`progress-ring`:** This is the main container, setting the size and basic style of the circle.  The `radial-gradient` creates the grey background with a transparent outer ring to give a 3D effect.
+* **`progress-ring::before`:** This pseudo-element creates the progress bar itself.  The `linear-gradient` provides the color, `clip-path` makes it circular, and the `background-size` and animation control its length.
+* **`@keyframes progress`:** This defines the animation. The `transform: rotate()` rotates the `linear-gradient`, and the `background-size` dynamically changes the progress arc length based on the `--progress` custom property.
+* **Custom Property `--progress`:** This allows easy control of the progress percentage.  A value of `0` represents 0% progress, `1` represents 100%, and so on.
+
 
 **External References:**
 
-* [CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) - MDN documentation on CSS transitions.
-* [CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) - MDN documentation on CSS transforms (while not directly used here, they are closely related and often used in conjunction with transitions).
+* [MDN Web Docs on `radial-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient)
+* [MDN Web Docs on `linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+* [MDN Web Docs on `clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
+* [MDN Web Docs on CSS Animations](https://developer.mozilla.org/en-US/docs/Web/CSS/animation)
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.

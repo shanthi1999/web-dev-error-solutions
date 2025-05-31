@@ -1,11 +1,11 @@
 # 🐞 Creating a Pure CSS Circular Progress Bar
 
 
-This document details how to create a circular progress bar using only CSS. No JavaScript or image assets are required.  This utilizes the `clip-path` property for a clean and efficient solution.
+This document details how to create a visually appealing circular progress bar using only CSS.  No JavaScript is required! This technique leverages CSS gradients and transforms to achieve a smooth, animated effect.
 
-**Description:**
+**Description of the Styling:**
 
-This styling creates a visually appealing circular progress bar that can be easily customized by changing the percentage value and colors. The progress bar is a single element styled entirely with CSS, making it lightweight and performant.  It works by using a circle as a base and then using the `clip-path` property to "clip" the circle, creating the progress effect.
+This circular progress bar uses a combination of techniques to create the visual effect.  A `radial-gradient` creates the circular base, while a `linear-gradient` masked with a circle is used to represent the progress.  CSS animations smoothly transition the progress.  This method is efficient and avoids the performance overhead of JavaScript solutions.
 
 **Full Code:**
 
@@ -13,13 +13,13 @@ This styling creates a visually appealing circular progress bar that can be easi
 <!DOCTYPE html>
 <html>
 <head>
-<title>Circular Progress Bar</title>
+<title>CSS Circular Progress Bar</title>
 <style>
 .progress-ring {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: #f0f0f0; /* Light gray background */
+  background: radial-gradient(circle at center, #e5e5e5, #e5e5e5 90%, transparent 100%);
   position: relative;
 }
 
@@ -32,44 +32,55 @@ This styling creates a visually appealing circular progress bar that can be easi
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #4CAF50; /* Green progress color */
-  clip-path: circle(50% at 50% 50%); /* Initial clip path */
-  animation: progress-animation 2s linear forwards; /* Animation */
+  background: linear-gradient(to right, #4CAF50, #4CAF50) no-repeat;
+  background-size: 100% 100%;
+  clip-path: circle(50% at center);
+  animation: progress 3s linear forwards;
 }
 
-@keyframes progress-animation {
+@keyframes progress {
   to {
-    clip-path: circle(75% at 50% 50%); /* Final clip path (75% complete) */
+    transform: translate(-50%, -50%) rotate(360deg); /* Adjust 360deg for progress percentage */
+    background-size: calc(100% * var(--progress)) 100%; /* Adjust var(--progress) accordingly */
   }
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Example usage with progress percentage (0-100%) */
+.container .progress-ring {
+  --progress: 0.75; /* 75% progress */
+}
+
 </style>
 </head>
 <body>
-
-<h1>Circular Progress Bar</h1>
-<div class="progress-ring"></div>
-
-
+<div class="container">
+  <div class="progress-ring"></div>
+</div>
 </body>
 </html>
 ```
 
-To change the percentage completion, modify the `circle()` value in the `@keyframes` section and adjust the animation duration as needed. For example, to show 30% completion, change `circle(75% at 50% 50%)` to `circle(30% at 50% 50%)`.  You can also customize the colors by changing the `background-color` properties.
-
-
 **Explanation:**
 
-1. **Base Circle:** The `.progress-ring` div creates the base circle with a light gray background.
-2. **Pseudo-element:** The `::before` pseudo-element creates the progress indicator on top of the base circle.
-3. **`clip-path`:**  The `clip-path: circle()` property is key. It creates a circular clipping region. The first `circle()` value defines the starting point, while the `@keyframes` animation modifies it to show the progress.
-4. **Animation:** The `progress-animation` keyframes smoothly change the `clip-path` radius, giving the progress effect.  `linear` ensures consistent speed, and `forwards` keeps the final state after animation.
-5. **Customization:**  The percentage completed, colors and animation duration can be easily adjusted in the CSS.
+* **`progress-ring`:** This is the main container, setting the size and basic style of the circle.  The `radial-gradient` creates the grey background with a transparent outer ring to give a 3D effect.
+* **`progress-ring::before`:** This pseudo-element creates the progress bar itself.  The `linear-gradient` provides the color, `clip-path` makes it circular, and the `background-size` and animation control its length.
+* **`@keyframes progress`:** This defines the animation. The `transform: rotate()` rotates the `linear-gradient`, and the `background-size` dynamically changes the progress arc length based on the `--progress` custom property.
+* **Custom Property `--progress`:** This allows easy control of the progress percentage.  A value of `0` represents 0% progress, `1` represents 100%, and so on.
 
 
 **External References:**
 
+* [MDN Web Docs on `radial-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient)
+* [MDN Web Docs on `linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 * [MDN Web Docs on `clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
-* [CSS-Tricks on Circular Progress Bars](https://css-tricks.com/creating-a-circular-progress-bar-with-only-css/) (This might offer alternative approaches)
+* [MDN Web Docs on CSS Animations](https://developer.mozilla.org/en-US/docs/Web/CSS/animation)
 
 
 Copyrights (c) OpenRockets Open-source Network. Free to use, copy, share, edit or publish.
