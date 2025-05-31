@@ -37,8 +37,16 @@ jobs:
             echo "topic=javascript" >> $GITHUB_OUTPUT
           elif echo "$CONTENT" | grep -q "css"; then
             echo "topic=css" >> $GITHUB_OUTPUT
+          elif echo "$CONTENT" | grep -q "nextjs"; then
+            echo "topic=nextjs" >> $GITHUB_OUTPUT  
+          elif echo "$CONTENT" | grep -q "expressjs"; then
+            echo "topic="expressjs" >> $GITHUB_OUTPUT    
+          elif echo "$CONTENT" | grep -q "openai"; then
+            echo "topic=openai" >> $GITHUB_OUTPUT  
           elif echo "$CONTENT" | grep -q "jquery"; then
             echo "topic=jquery" >> $GITHUB_OUTPUT
+          elif echo "$CONTENT" | grep -q "vuejs"; then
+            echo "topic=vuejs" >> $GITHUB_OUTPUT
           else
             echo "topic=general" >> $GITHUB_OUTPUT
           fi
